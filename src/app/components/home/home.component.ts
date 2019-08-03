@@ -7,13 +7,17 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./home.component.css']
 })
 export class HomeComponent implements OnInit {
-
+  allposts = []
   constructor(private hs: HomeService) { }
 
   ngOnInit() {
     this.hs.getAllPosts().subscribe((data:any) =>{
       console.log(data)
+      this.allposts = data;
     })
   }
-
+  showMenu() {
+    document.getElementById('burger').classList.toggle("is-active")
+    document.getElementById('navbarBasicExample').classList.toggle('is-active')
+  }
 }

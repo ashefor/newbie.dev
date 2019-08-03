@@ -14,11 +14,6 @@ export class CreatComponent implements OnInit {
   ngOnInit() {
 
   }
-  // newPost = this.fb.group({
-  //   title: ['', Validators.compose([Validators.required])],
-  //   body: ['', Validators.compose([Validators.required])],
-  //   author: ['', Validators.compose([Validators.required])],
-  // })
 
   newPost =  new FormGroup({
     title: new FormControl(null, [
@@ -31,6 +26,11 @@ export class CreatComponent implements OnInit {
       Validators.required,
     ]),
   })
+
+  showMenu() {
+    document.getElementById('burger').classList.toggle("is-active")
+    document.getElementById('navbarBasicExample').classList.toggle('is-active')
+  }
 
   get body(){
     return this.newPost.get('body')
