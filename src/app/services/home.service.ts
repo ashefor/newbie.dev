@@ -15,4 +15,8 @@ export class HomeService {
   createPost(title: string, author: string, body: string, date: Date){
     return this.http.post(this.postsURL, {title, author, body, date})
   }
+
+  viewOnePost(id){
+    return this.http.get(`${this.postsURL}/${id}`)
+  }
 }

@@ -20,4 +20,8 @@ export class HomeComponent implements OnInit {
     document.getElementById('burger').classList.toggle("is-active")
     document.getElementById('navbarBasicExample').classList.toggle('is-active')
   }
+
+  showid(id){
+    // console.log(id)
+  }
 }

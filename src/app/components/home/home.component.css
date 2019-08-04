@@ -3,6 +3,12 @@
     margin-left: auto;
     margin-right: auto;
 }
+a{
+    color: black
+}
+a:hover{
+    color: #3273dc
+}
 .test{
     background-color: #209cee
 }

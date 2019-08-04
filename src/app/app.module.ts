@@ -8,13 +8,15 @@ import { HomeComponent } from './components/home/home.component';
 import { HttpClientModule } from '@angular/common/http';
 import { CreatComponent } from './components/creat/creat.component';
 import { ReactiveFormsModule } from '@angular/forms';
+import { ViewpostComponent } from './components/viewpost/viewpost.component';
 
 
 @NgModule({
   declarations: [
     AppComponent,
     HomeComponent,
-    CreatComponent
+    CreatComponent,
+    ViewpostComponent
   ],
   imports: [
     BrowserModule,
