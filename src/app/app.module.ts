@@ -9,6 +9,10 @@ import { HttpClientModule } from '@angular/common/http';
 import { CreatComponent } from './components/creat/creat.component';
 import { ReactiveFormsModule } from '@angular/forms';
 import { ViewpostComponent } from './components/viewpost/viewpost.component';
+import { EditComponent } from './components/edit/edit.component';
+
+import { CKEditorModule } from '@ckeditor/ckeditor5-angular';
+
 
 
 @NgModule({
@@ -16,13 +20,15 @@ import { ViewpostComponent } from './components/viewpost/viewpost.component';
     AppComponent,
     HomeComponent,
     CreatComponent,
-    ViewpostComponent
+    ViewpostComponent,
+    EditComponent
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     HttpClientModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    CKEditorModule
   ],
   providers: [],
   bootstrap: [AppComponent]

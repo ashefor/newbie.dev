@@ -15,4 +15,14 @@ a:hover{
 .texttrunc {
     height: 6.25em; /* exactly three lines */
     overflow: hidden;
-  }
+}
+.c_f{
+    margin-top: 2rem;
+    border-top: 1px solid #cccc
+}
+.c_f .level{
+    padding-top: .5rem;
+}
+.far.fa-comments{
+    font-size: 20px;
+}

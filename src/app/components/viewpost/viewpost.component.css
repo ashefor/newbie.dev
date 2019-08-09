@@ -6,3 +6,35 @@
 .test{
     background-color: #209cee
 }
+.post_wrapper{
+    max-width: 750px;
+    margin-left: auto;
+    margin-right: auto;
+}
+.p_t{
+    margin-top: 0.78em;
+    margin-bottom: 0.78em
+}
+.p_a{
+    margin-top: 32px
+}
+/* .texttrunc{
+    margin-top: 2rem;
+} */
+:host ::ng-deep .ck-editor__editable_inline {
+    min-height: 150px;
+    margin-top: 3rem;
+    padding: 0 25px;
+    border: 2px solid #cccccc;
+}
+:host ::ng-deep .ck-editor__editable > .ck-placeholder::before {
+    color: #d21714;
+    font-family: Georgia;
+}
+.body-text{
+    margin: 3rem 0;
+}
+.lp{
+    padding-right: 2rem;
+    padding-left: 2rem
+}

@@ -1,3 +1,4 @@
+import { posts } from './../model/post.model';
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 
@@ -9,14 +10,23 @@ export class HomeService {
   constructor(private http: HttpClient) { }
 
   getAllPosts(){
-    return this.http.get(this.postsURL)
+    return this.http.get<posts[]>(this.postsURL)
   }
 
-  createPost(title: string, author: string, body: string, date: Date){
-    return this.http.post(this.postsURL, {title, author, body, date})
+  createPost(post: posts){
+    return this.http.post(this.postsURL, post)
   }
 
-  viewOnePost(id){
-    return this.http.get(`${this.postsURL}/${id}`)
+  viewOnePost(id: number){
+    return this.http.get<posts>(`${this.postsURL}/${id}`)
+  }
+  editPost(id: number){
+    return this.http.get<posts>(`${this.postsURL}/${id}/edit`)
+  }
+  updatePost(post: posts){
+    return this.http.put(`${this.postsURL}/${post._id}`, post)
+  }
+  deletePost(id: number){
+    return this.http.delete(`${this.postsURL}/${id}`)
   }
 }

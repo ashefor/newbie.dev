@@ -45,7 +45,9 @@
           Title
         </label>
         <div class="control">
-          <input type="text" formControlName="title" class="input is-medium" placeholder="Title of post" required>
+          <input type="text" formControlName="title" class="input title is-size-4 is-medium"  placeholder="Title of post" maxlength="100">
+          <!-- <textarea name="" id="author" class="textarea" formControlName="title" (input)="growAuthTitle($event)" placeholder="Title of post" ></textarea> -->
+          <!-- <textarea name="" id="" cols="30" rows="5" class="textarea"></textarea> -->
         </div>
         <div *ngIf="title.touched && title.invalid" class="has-text-danger">
           <div *ngIf="title.errors.required">Please add a title</div>
@@ -53,22 +55,11 @@
       </div>
       <div class="field">
         <label for="" class="label">
-          Author
-        </label>
-        <div class="control">
-          <input type="text" formControlName="author" placeholder="Who are you?" class="input is-medium" required>
-          </div>
-          <div *ngIf="author.touched && author.invalid" class="has-text-danger">
-            <div *ngIf="author.errors.required">Please tell us who you are</div>
-        </div>
-      </div>
-      <div class="field">
-        <label for="" class="label">
           Description
         </label>
         <div class="control">
-          <textarea name="" id="" cols="30" rows="10" formControlName="body" placeholder="Enter post content" class="textarea" required></textarea>
-          </div>
+          <ckeditor [editor]="Editor" formControlName="body"></ckeditor>
+        </div>
           <div *ngIf="body.touched && body.invalid" class="has-text-danger">
             <div *ngIf="body.errors.required">Please enter your post</div>
         </div>

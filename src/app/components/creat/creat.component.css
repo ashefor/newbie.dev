@@ -9,3 +9,23 @@
 textarea{
     resize: none
 }
+:host ::ng-deep .ck-editor__editable_inline {
+    min-height: 300px;
+    padding: 20px;
+}
+#add_description{
+	/* height: 300px; */
+    /* padding: 5px; */
+    max-height: unset;
+    height: 300px;
+    outline: none;
+	overflow: hidden;
+	/* box-sizing: border-box; */
+}
+#author{
+    max-height: unset;
+    min-height: unset;
+    height: 60px;
+    outline: none;
+	overflow: hidden;
+}
