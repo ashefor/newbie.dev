@@ -9,8 +9,18 @@ a{
 a:hover{
     color: #3273dc
 }
-.test{
-    background-color: #209cee
+nav{
+    max-width: 1000px;
+    margin-left: auto;
+    margin-right: auto;
+}
+.navcontainer{
+    background-color: #209cee;
+    height: 4rem;
+    width: 100%;
+    position: fixed;
+    top: 0;
+    z-index: 30;
 }
 .texttrunc {
     height: 6.25em; /* exactly three lines */
