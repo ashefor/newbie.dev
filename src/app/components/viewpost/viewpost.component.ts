@@ -21,17 +21,14 @@ export class ViewpostComponent implements OnInit {
   config: any = {
     placeholder: 'Your placeholder'
   }
+  nooflikes;
+  hasLiked;
+  alltags;
+  showalltags:boolean
+  
   constructor(private route: ActivatedRoute, private hs: HomeService, private router: Router) { }
   result;
   periods;
-  // str1;
-  // str2;
-  // str3
-  // str4;
-  // str5;
-  // str6;
-  // str7;
-  // str8;
   ngOnInit() {
     this.route.params.subscribe((params: Params) => {
       console.log(params)
@@ -39,15 +36,28 @@ export class ViewpostComponent implements OnInit {
         if (res) {
           this.showpost = true;
           this.post = res;
-          console.log(this.post)
+          // console.log(this.post)
           this.periods = res.body
-          // this.showperiods(this.periods)
+          this.nooflikes = res.meta.likes;
+          // console.log(this.nooflikes)
+          // console.log(res.meta.tags)
+          this.alltags = res.meta.tags
           this.readingTime(res.body)
+          this.showTags(res.meta.tags)
         }
       })
     })
   }
  
+
+  showTags(tags){
+    if(tags.length > 0){
+      this.showalltags = true;
+    }
+    else{
+      this.showalltags = false
+    }
+  }
   showMenu() {
     document.getElementById('burger').classList.toggle("is-active")
     document.getElementById('navbarBasicExample').classList.toggle('is-active')
@@ -62,6 +72,24 @@ export class ViewpostComponent implements OnInit {
     const noOfWords = body.split(/\s/g).length;
     const minutes = noOfWords / wordsPerMinute;
     this.result = Math.ceil(minutes)
+  }
+
+  likePost(id){
+    if(!this.hasLiked){
+      this.hasLiked = true;
+      this.nooflikes +=1
+      this.hs.likeThisPost(id).subscribe((data:any)=>{
+        alert('liked successfully')
+      })
+    }
+    // else{
+    //   this.hasLiked = false;
+    //   this.nooflikes -=1
+    //   console.log(this.nooflikes);
+    //   this.hs.likeThisPost(id).subscribe((data:any)=>{
+    //     console.log(data)
+    //   })
+    // }
   }
 
   deleteThisPost(poste: posts){

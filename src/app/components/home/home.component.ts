@@ -12,7 +12,9 @@ export class HomeComponent implements OnInit {
   posts: posts[];
   nodata;
   // wordsPerMinute =  200;
-  result = []
+  result = [];
+  showTags = false;
+  alltags = []
   constructor(private hs: HomeService) { }
 
   ngOnInit() {
@@ -20,8 +22,9 @@ export class HomeComponent implements OnInit {
      if(data){
       console.log(data)
       this.posts = data;
-      for(let y of data){
-        this.readingTime(y.body)
+      for(let obj of data){
+        this.readingTime(obj.body)
+        this.alltags.push(obj.meta.tags)
       }
      }
     })
@@ -30,7 +33,6 @@ export class HomeComponent implements OnInit {
     document.getElementById('burger').classList.toggle("is-active")
     document.getElementById('navbarBasicExample').classList.toggle('is-active')
   }
-
   readingTime(body) {
     const wordsPerMinute = 200;
     const noOfWords = body.split(/\s/g).length;

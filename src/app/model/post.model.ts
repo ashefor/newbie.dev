@@ -4,5 +4,12 @@ export class posts {
     body: string;
     author: string;
     date: Date;
-    likes: number;
+    comments: [{
+        body: string;
+        date: Date;
+    }];
+    meta: {
+        likes: number;
+        tags: Array<any>
+      }
 }

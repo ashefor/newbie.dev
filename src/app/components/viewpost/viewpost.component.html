@@ -1,5 +1,5 @@
 <div class="navcontainer">
-  <nav class="navbar is-fixed-top is-info" role="navigation" aria-label="main navigation">
+  <nav class="navbar is-fixed-top is-white" role="navigation" aria-label="main navigation">
     <div class="navbar-brand">
       <a class="navbar-item is-size-3 is-uppercase" [routerLink]="['/home']" routerLinkActive="router-link-active">
         <!-- <img src="https://bulma.io/images/bulma-logo.png" width="112" height="28"> -->
@@ -19,15 +19,13 @@
         <a class="navbar-item" [routerLink]="['/create']" routerLinkActive="router-link-active">
           Write a post
         </a>
+        <a class="navbar-item has-text-primary has-text-weight-semibold">
+          Sign In
+        </a>
         <div class="navbar-item">
-          <div class="buttons">
-            <a class="button is-primary">
-              <strong>Sign up</strong>
-            </a>
-            <a class="button is-light">
-              Log in
-            </a>
-          </div>
+          <a class="button is-primary is-outlined">
+            Log in
+          </a>
         </div>
       </div>
     </div>
@@ -65,14 +63,25 @@
           <p class="title is-size-2 has-text-weight-normal">
             {{post.title}}
           </p>
+          <div class="tags">
+            <span class="tag" *ngFor="let tags of alltags">
+              {{tags}}
+             </span>
+          </div>
         </div>
         <div class="body-text content">
           <div class="content texttrunc is-size-5" [innerHTML]="post.body">
             <!-- {{post.body}} -->
           </div>
           <div class="field has-text-left-mobile has-text-right lp">
-            <a class="icon has-text-info is-size-3" title="Edit">
-              <i class="fas fa-thumbs-up"></i>
+            <a class="icon is-size-4" (click)="likePost(post._id)">
+              <span>
+                <i class="fas fa-heart has-text-link" *ngIf="!hasLiked"></i>
+                <i class="fas fa-heart has-text-danger" *ngIf="hasLiked"></i>
+              </span>
+              <span>
+                {{nooflikes}}
+              </span>
             </a>
           </div>
           <hr>

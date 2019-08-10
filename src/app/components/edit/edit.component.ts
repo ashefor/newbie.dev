@@ -30,7 +30,7 @@ export class EditComponent implements OnInit {
       this.hs.editPost(params.id).subscribe((data: any)=>{
         console.log(data)
         this.editpost = data
-        console.log(data.body)
+        // console.log(data.body)
         this.updateform.patchValue(data)
       })
     })

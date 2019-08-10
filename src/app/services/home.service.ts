@@ -21,12 +21,15 @@ export class HomeService {
     return this.http.get<posts>(`${this.postsURL}/${id}`)
   }
   editPost(id: number){
-    return this.http.get<posts>(`${this.postsURL}/${id}/edit`)
+    return this.http.get<posts>(`${this.postsURL}/${id}`)
   }
   updatePost(post: posts){
     return this.http.put(`${this.postsURL}/${post._id}`, post)
   }
   deletePost(id: number){
     return this.http.delete(`${this.postsURL}/${id}`)
+  }
+  likeThisPost(id: number){
+    return this.http.patch(`${this.postsURL}/${id}/likes`, {})
   }
 }

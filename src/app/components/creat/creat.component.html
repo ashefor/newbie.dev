@@ -1,5 +1,5 @@
 <div class="navcontainer">
-  <nav class="navbar is-fixed-top is-info" role="navigation" aria-label="main navigation">
+  <nav class="navbar is-fixed-top is-white" role="navigation" aria-label="main navigation">
     <div class="navbar-brand">
       <a class="navbar-item is-size-3 is-uppercase" [routerLink]="['/home']" routerLinkActive="router-link-active">
         <!-- <img src="https://bulma.io/images/bulma-logo.png" width="112" height="28"> -->
@@ -19,15 +19,13 @@
         <a class="navbar-item" [routerLink]="['/create']" routerLinkActive="router-link-active">
           Write a post
         </a>
+        <a class="navbar-item has-text-primary has-text-weight-semibold">
+          Sign In
+        </a>
         <div class="navbar-item">
-          <div class="buttons">
-            <a class="button is-primary">
-              <strong>Sign up</strong>
-            </a>
-            <a class="button is-light">
-              Log in
-            </a>
-          </div>
+          <a class="button is-primary is-outlined">
+            Log in
+          </a>
         </div>
       </div>
     </div>
@@ -41,7 +39,8 @@
           Title
         </label>
         <div class="control">
-          <input type="text" formControlName="title" class="input title is-size-4 is-medium"  placeholder="Title of post" maxlength="100">
+          <input type="text" formControlName="title" class="input title is-size-4 is-medium" placeholder="Title of post"
+            maxlength="100">
           <!-- <textarea name="" id="author" class="textarea" formControlName="title" (input)="growAuthTitle($event)" placeholder="Title of post" ></textarea> -->
           <!-- <textarea name="" id="" cols="30" rows="5" class="textarea"></textarea> -->
         </div>
@@ -56,12 +55,26 @@
         <div class="control">
           <ckeditor [editor]="Editor" formControlName="body"></ckeditor>
         </div>
-          <div *ngIf="body.touched && body.invalid" class="has-text-danger">
-            <div *ngIf="body.errors.required">Please enter your post</div>
+        <div *ngIf="body.touched && body.invalid" class="has-text-danger">
+          <div *ngIf="body.errors.required">Please enter your post</div>
+        </div>
+      </div>
+      <div class="field" formGroupName="meta">
+        <label class="label">Tags</label>
+        <div class="control" *ngFor="let tag of alltags; let i = index">
+          <label for="" (click)="addtag($event)">
+            <input type="checkbox" class="checkbox" value="{{tag}}" [attr.data-value]="tag">
+            {{alltags[i]}}
+          </label>
         </div>
       </div>
       <button class="button is-info is-fullwidth is-medium" type="submit" [disabled]="newPost.invalid">
+        <span>
           Create Post
+        </span>
+        <span class="icon is-small" *ngIf="loading">
+          <i class="fas fa-spinner fa-pulse"></i>
+        </span>
       </button>
     </form>
   </div>
