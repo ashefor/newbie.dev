@@ -1,9 +1,12 @@
+import { FormGroup, FormBuilder, FormControl } from '@angular/forms';
 import { HomeService } from './../../services/home.service';
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Params, Router } from '@angular/router';
 
 import * as BalloonEditor from '@ckeditor/ckeditor5-build-balloon';
 import { posts } from 'src/app/model/post.model';
+import { ChangeEvent } from '@ckeditor/ckeditor5-angular/ckeditor.component';
+import { Location } from '@angular/common';
 
 
 
@@ -17,27 +20,51 @@ export class ViewpostComponent implements OnInit {
   poste: posts[]
   showpost;
   addComment;
+  previewedcomment;
+  allcomments = [];
+  editedcomemnt;
   public Editor = BalloonEditor;
-  config: any = {
-    placeholder: 'Your placeholder'
+  public onChange({ editor }: ChangeEvent) {
+    // const data = editor.getData();
+    this.editedcomemnt = editor.getData()
+  }
+  public editorData;
+  public config: any = {
+    placeholder: 'Add a comment'
   }
   nooflikes;
   hasLiked;
   alltags;
-  showalltags:boolean
-  
-  constructor(private route: ActivatedRoute, private hs: HomeService, private router: Router) { }
+  showalltags: boolean;
+  showcomment = false;
   result;
   periods;
+  postId;
+  loadid;
+  commentForm: FormGroup;
+
+
+  constructor(private route: ActivatedRoute, 
+    private hs: HomeService, 
+    private router: Router, 
+    private fb: FormBuilder, 
+    private location: Location) { }
+  
   ngOnInit() {
+    this.commentForm = this.fb.group({
+      body: ['']
+    })
+
     this.route.params.subscribe((params: Params) => {
       console.log(params)
+      this.postId = params.id;
       this.hs.viewOnePost(params.id).subscribe((res: any) => {
         if (res) {
           this.showpost = true;
           this.post = res;
-          // console.log(this.post)
           this.periods = res.body
+          this.allcomments = res.comments
+          // console.log(this.allcomments)
           this.nooflikes = res.meta.likes;
           // console.log(this.nooflikes)
           // console.log(res.meta.tags)
@@ -48,13 +75,13 @@ export class ViewpostComponent implements OnInit {
       })
     })
   }
- 
 
-  showTags(tags){
-    if(tags.length > 0){
+
+  showTags(tags) {
+    if (tags.length > 0) {
       this.showalltags = true;
     }
-    else{
+    else {
       this.showalltags = false
     }
   }
@@ -63,8 +90,8 @@ export class ViewpostComponent implements OnInit {
     document.getElementById('navbarBasicExample').classList.toggle('is-active')
   }
 
-  toggleComment(){
-    this.addComment =! this.addComment
+  toggleComment() {
+    this.addComment = !this.addComment
   }
 
   readingTime(body) {
@@ -74,11 +101,11 @@ export class ViewpostComponent implements OnInit {
     this.result = Math.ceil(minutes)
   }
 
-  likePost(id){
-    if(!this.hasLiked){
+  likePost(id) {
+    if (!this.hasLiked) {
       this.hasLiked = true;
-      this.nooflikes +=1
-      this.hs.likeThisPost(id).subscribe((data:any)=>{
+      this.nooflikes += 1
+      this.hs.likeThisPost(id).subscribe((data: any) => {
         alert('liked successfully')
       })
     }
@@ -92,17 +119,51 @@ export class ViewpostComponent implements OnInit {
     // }
   }
 
-  deleteThisPost(poste: posts){
-   if(confirm(`Really delete ${poste.title}?`)){
-    this.hs.deletePost(poste._id).subscribe((data: any)=>{
-      if(data){
-        this.router.navigate(['/home'])
-      }
-      (error: any) => {
-        console.log(error)
-      }
-    })
-   }
+  deleteThisPost(poste: posts) {
+    if (confirm(`Really delete ${poste.title}?`)) {
+      this.hs.deletePost(poste._id).subscribe((data: any) => {
+        if (data) {
+          this.router.navigate(['/home'])
+        }
+        (error: any) => {
+          console.log(error)
+        }
+      })
+    }
   }
 
+  addThisComment(id) {
+    const body = this.commentForm.value.body
+    this.hs.createComment(id, body).subscribe((data: any) => {
+      if (data) {
+        this.commentForm.reset()
+        location.reload()
+        this.addComment = false;
+      }
+    })
+  }
+
+  editComment(comment_id){
+    this.hs.getSingleCommentForUpdate(this.postId, comment_id).subscribe((data: any) => {
+      if (data) {
+        this.loadid = data.comment._id;
+        this.editorData = data.comment.body;
+      }
+    })
+  }
+  cancelComment(arg){
+    this.loadid = arg
+    console.log(this.editedcomemnt)
+  }
+  updateComment(comment_id){
+    this.hs.updateThisComment(this.postId, comment_id, this.editedcomemnt).subscribe((data: any)=>{
+      console.log(data)
+      if(data){
+        this.router.navigate([`/${this.postId}`])
+        this.loadid = null;
+        this.cancelComment(this.loadid)
+        location.reload()
+      }
+    })
+  }
 }

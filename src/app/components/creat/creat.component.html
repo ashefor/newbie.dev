@@ -62,7 +62,7 @@
       <div class="field" formGroupName="meta">
         <label class="label">Tags</label>
         <div class="control" *ngFor="let tag of alltags; let i = index">
-          <label for="" (click)="addtag($event)">
+          <label class="checbox" (click)="addtag($event)">
             <input type="checkbox" class="checkbox" value="{{tag}}" [attr.data-value]="tag">
             {{alltags[i]}}
           </label>

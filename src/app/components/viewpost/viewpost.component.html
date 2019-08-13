@@ -70,7 +70,7 @@
           </div>
         </div>
         <div class="body-text content">
-          <div class="content texttrunc is-size-5" [innerHTML]="post.body">
+          <div class="content texttrunc is-size-5 has-text-justified" [innerHTML]="post.body">
             <!-- {{post.body}} -->
           </div>
           <div class="field has-text-left-mobile has-text-right lp">
@@ -86,7 +86,7 @@
           </div>
           <hr>
         </div>
-        <footer class="">
+        <div class="">
           <a class="button is-primary is-outlined is-fullwidth is-medium" (click)="toggleComment()">
             <p *ngIf="addComment">
               I change my mind
@@ -95,10 +95,93 @@
               Add a comment
             </p>
           </a>
-          <ckeditor [editor]="Editor" *ngIf="addComment" class="animated fadeInUp"></ckeditor>
-        </footer>
+         <div *ngIf="addComment" style="border: 2px solid" class="field c_w">
+          <form [formGroup]="commentForm">
+            <div class="control t_w">
+              <ckeditor [editor]="Editor" formControlName="body" [config]="config"></ckeditor>
+            </div>
+            <div class="buttons is-right b_w">
+              <span class="button is-info" (click)="addThisComment(post._id)">Submit</span>
+            </div>
+          </form>
+         </div>
+        </div>
+        <div *ngFor="let comment of post.comments.reverse()" class="d_c">
+          <div class="card s_c">
+            <div class="card-content">
+              <div class="media">
+                <div class="media-left">
+                  <figure class="image is-32x32">
+                    <img src="https://bulma.io/images/placeholders/96x96.png" alt="Placeholder image" class="is-rounded">
+                  </figure>
+                </div>
+                <div class="media-content">
+                  <div class="content">
+                    <p class="has-text-weight-light is-size-6 c_a">{{comment.author? comment.author: 'Anonymous'}}</p>
+                    <time datetime="" class="has-text-weight-light is-size-6">{{post.date | date : 'MMM dd'}}</time>
+                  <!-- <p class="subtitle has-text-weight-light is-6">{{post.date | date : 'MMM dd'}}</p> -->
+                  </div>
+                </div>
+                <div class="media-right">
+                    <i class="fa fa-ellipsis-v"></i>
+                </div>
+              </div>
+              <div class="content" [innerHTML]="comment.body">
+                  
+              </div>
+              <div class="c_f">
+                <div class="level is-mobile">
+                  <div class="level-left">
+                    <div class="level-item">
+                      <a>
+                          <span class="icon">
+                              <i class="fas fa-heart has-text-danger"></i>
+                          </span>
+                        <span>0</span>
+                      </a>
+                    </div>
+                  </div>
+                  <div class="level-right">
+                      <div class="level-item">
+                          <a>
+                            Delete
+                          </a>
+                        </div>
+                        <div class="level-item">
+                            <a (click)="editComment(comment._id)">
+                              Edit
+                            </a>
+                          </div>
+                    <div class="level-item">
+                        <p>Reply</p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div *ngIf="comment._id=== loadid">
+              <ckeditor [editor]="Editor" [data]="editorData" (change)="onChange($event)">
 
+              </ckeditor>
+              <div class="buttons">
+                  <a class="button is-dark" (click)="cancelComment()">
+                      cancel 
+                    </a>
+                    <a class="button is-dark" (click)="updateComment(comment._id)">
+                      update
+                    </a>
+              </div>
+          </div>
+        </div>
       </div>
     </div>
   </div>
 </div>
+<footer class="footer">
+    <div class="content has-text-centered">
+      <p>
+        Shredder et Ralty
+      </p>
+    </div>
+  </footer>

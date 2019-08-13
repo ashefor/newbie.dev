@@ -10,6 +10,6 @@ export class posts {
     }];
     meta: {
         likes: number;
-        tags: Array<any>
+        tags: any
       }
 }

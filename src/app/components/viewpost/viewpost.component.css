@@ -19,7 +19,7 @@ nav{
     z-index: 500;
 }
 .post_wrapper{
-    max-width: 750px;
+    max-width: 800px;
     margin-left: auto;
     margin-right: auto;
 }
@@ -35,12 +35,12 @@ nav{
 } */
 :host ::ng-deep .ck-editor__editable_inline {
     min-height: 150px;
-    margin-top: 3rem;
+    /* margin-top: 3rem; */
     padding: 0 25px;
     border: 2px solid #cccccc;
 }
 :host ::ng-deep .ck-editor__editable > .ck-placeholder::before {
-    color: #d21714;
+    /* color: #d21714; */
     font-family: Georgia;
 }
 .body-text{
@@ -49,4 +49,23 @@ nav{
 .lp{
     padding-right: 2rem;
     padding-left: 2rem
+}
+.t_w{
+    margin: 15px 15px 2px;
+}
+.b_w{
+    margin: 5px 15px 2px;
+}
+.c_w{
+    margin-top: 3rem;
+}
+.s_c, .d_c{
+    margin-top: 20px
+}
+.c_a{
+    margin: auto !important;
+}
+.d_c{
+    /* height: 200px; */
+    margin-bottom: 3rem;
 }

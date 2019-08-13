@@ -30,6 +30,15 @@ export class HomeService {
     return this.http.delete(`${this.postsURL}/${id}`)
   }
   likeThisPost(id: number){
-    return this.http.patch(`${this.postsURL}/${id}/likes`, {})
+    return this.http.put(`${this.postsURL}/${id}/likes`,{})
+  }
+  createComment(id: number, body: string){
+    return this.http.post(`${this.postsURL}/${id}/comments`, {body})
+  }
+  getSingleCommentForUpdate(post_id: number, comment_id: number){
+    return this.http.get(`${this.postsURL}/${post_id}/comments/${comment_id}`)
+  }
+  updateThisComment(post_id: number, comment_id: number, comment: string){
+    return this.http.put(`${this.postsURL}/${post_id}/comments/${comment_id}`, {comment})
   }
 }

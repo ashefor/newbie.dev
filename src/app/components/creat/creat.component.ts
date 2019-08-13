@@ -16,13 +16,15 @@ export class CreatComponent implements OnInit {
   editable: ElementRef;
   newPost: FormGroup
   loading;
-  alltags = ['general', 'music', 'science', 'data'];
+  alltags = ['general', 'frontend', 'backend', 'javascript', 'framework', 'typescript', 'design', 'vue', 'react', 'angular'];
   selectedtags = []
   constructor(private fb: FormBuilder, private hs: HomeService, private router: Router) { }
   // config: any = {
   //   toolbar: ['heading', '|', 'bold', 'italic', 'link', 'bulletedList', 'numberedList', 'blockQuote']
   // }
-
+  public config: any = {
+    placeholder: 'Description'
+  }
   ngOnInit() {
     this.newPost = this.fb.group({
       title: ['', Validators.required],
@@ -62,13 +64,13 @@ export class CreatComponent implements OnInit {
       // this.tags.push()
       this.selectedtags.push(id)
       this.newPost.patchValue(this.selectedtags.values)
-      console.log(this.selectedtags)
+      // console.log(this.selectedtags)
     }else {
       const index = this.selectedtags.indexOf(id);
       if (index > -1) {
         this.selectedtags.splice(index, 1);
       }
-      console.log(this.selectedtags)
+      // console.log(this.selectedtags)
     }
   }
   get body() {
@@ -76,9 +78,6 @@ export class CreatComponent implements OnInit {
   }
   get title() {
     return this.newPost.get('title')
-  }
-  get tags(){
-    return this.newPost.get('tags') as FormArray
   }
 
   onSubmit() {
@@ -91,7 +90,7 @@ export class CreatComponent implements OnInit {
     const author = this.newPost.value.author;
     const title = this.newPost.value.title
     const date = new Date()
-    console.log(this.newPost.value)
+    // console.log(this.newPost.value)
     this.hs.createPost(this.newPost.value).subscribe((data: any) => {
       console.log(data)
       if(data){
