@@ -41,4 +41,10 @@ export class HomeService {
   updateThisComment(post_id: number, comment_id: number, comment: string){
     return this.http.put(`${this.postsURL}/${post_id}/comments/${comment_id}`, {comment})
   }
+  postReply(post_id: number, comment_id: number, text: string){
+    return this.http.post(`${this.postsURL}/${post_id}/comments/${comment_id}/replies`, {text})
+  }
+  deleteComment(post_id: number, comment_id: number){
+    return this.http.delete(`${this.postsURL}/${post_id}/comments/${comment_id}`)
+  }
 }

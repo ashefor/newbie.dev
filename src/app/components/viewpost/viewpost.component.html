@@ -66,7 +66,7 @@
           <div class="tags">
             <span class="tag" *ngFor="let tags of alltags">
               {{tags}}
-             </span>
+            </span>
           </div>
         </div>
         <div class="body-text content">
@@ -95,83 +95,179 @@
               Add a comment
             </p>
           </a>
-         <div *ngIf="addComment" style="border: 2px solid" class="field c_w">
-          <form [formGroup]="commentForm">
-            <div class="control t_w">
-              <ckeditor [editor]="Editor" formControlName="body" [config]="config"></ckeditor>
-            </div>
-            <div class="buttons is-right b_w">
-              <span class="button is-info" (click)="addThisComment(post._id)">Submit</span>
-            </div>
-          </form>
-         </div>
+          <div *ngIf="addComment" style="border: 2px solid" class="field c_w">
+            <form [formGroup]="commentForm">
+              <div class="control t_w">
+                <ckeditor [editor]="Editor" formControlName="body" [config]="config"></ckeditor>
+              </div>
+              <div class="buttons is-right b_w">
+                <span class="button is-info" (click)="addThisComment(post._id)">Submit</span>
+              </div>
+            </form>
+          </div>
         </div>
-        <div *ngFor="let comment of post.comments.reverse()" class="d_c">
-          <div class="card s_c">
-            <div class="card-content">
-              <div class="media">
-                <div class="media-left">
-                  <figure class="image is-32x32">
-                    <img src="https://bulma.io/images/placeholders/96x96.png" alt="Placeholder image" class="is-rounded">
-                  </figure>
+        <div *ngFor="let comment of post.comments.reverse(); let index = y" class="d_c">
+
+          <div *ngIf="comment == null; else showOtherComment">
+            <div class="card s_c">
+              <div class="card-content">
+                <div class="control">
+                  <input class="input" type="text" placeholder="comment unavailable" disabled>
                 </div>
-                <div class="media-content">
-                  <div class="content">
-                    <p class="has-text-weight-light is-size-6 c_a">{{comment.author? comment.author: 'Anonymous'}}</p>
-                    <time datetime="" class="has-text-weight-light is-size-6">{{post.date | date : 'MMM dd'}}</time>
-                  <!-- <p class="subtitle has-text-weight-light is-6">{{post.date | date : 'MMM dd'}}</p> -->
+              </div>
+            </div>
+          </div>
+          <ng-template #showOtherComment>
+            <div class="card s_c">
+              <div class="card-content">
+                <div class="media">
+                  <div class="media-left">
+                    <figure class="image is-32x32">
+                      <img src="https://bulma.io/images/placeholders/96x96.png" alt="Placeholder image"
+                        class="is-rounded">
+                    </figure>
                   </div>
-                </div>
-                <div class="media-right">
-                    <i class="fa fa-ellipsis-v"></i>
-                </div>
-              </div>
-              <div class="content" [innerHTML]="comment.body">
-                  
-              </div>
-              <div class="c_f">
-                <div class="level is-mobile">
-                  <div class="level-left">
-                    <div class="level-item">
-                      <a>
-                          <span class="icon">
-                              <i class="fas fa-heart has-text-danger"></i>
-                          </span>
-                        <span>0</span>
-                      </a>
+                  <div class="media-content">
+                    <div class="content">
+                      <p class="has-text-weight-light is-size-6 c_a">{{comment.author? comment.author: 'Anonymous'}}</p>
+                      <time datetime="" class="has-text-weight-light is-size-6">{{post.date | date : 'MMM dd'}}</time>
+                      <!-- <p class="subtitle has-text-weight-light is-6">{{post.date | date : 'MMM dd'}}</p> -->
                     </div>
                   </div>
-                  <div class="level-right">
+                  <div class="media-right">
+                    <i class="fa fa-ellipsis-v"></i>
+                  </div>
+                </div>
+                <div class="content" [innerHTML]="comment.body">
+
+                </div>
+                <div class="c_f">
+                  <div class="level is-mobile">
+                    <div class="level-left">
                       <div class="level-item">
+                        <a>
+                          <span class="icon">
+                            <i class="fas fa-heart has-text-danger"></i>
+                          </span>
+                          <span>0</span>
+                        </a>
+                      </div>
+                    </div>
+                    <div class="level-right">
+                      <div class="level-item">
+                        <a (click)="deleteThisComment(post, comment)">
+                          Delete
+                        </a>
+                      </div>
+                      <div class="level-item">
+                        <a (click)="editComment(comment._id)">
+                          Edit
+                        </a>
+                      </div>
+                      <div class="level-item">
+                        <a (click)="replyComment(comment._id)">Reply</a>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div *ngIf="comment?._id === loadid">
+                <ckeditor [editor]="Editor" [data]="editorData" (change)="onChange($event)">
+    
+                </ckeditor>
+                <div class="buttons">
+                  <a class="button is-dark" (click)="cancelComment()">
+                    cancel
+                  </a>
+                  <a class="button is-dark" (click)="updateComment(comment._id)">
+                    update
+                  </a>
+                </div>
+              </div>
+              <div *ngIf="comment?._id === newloadid">
+                  <ckeditor [editor]="Editor" (change)="replyData($event)">
+    
+                  </ckeditor>
+                  <div class="buttons">
+                      <a class="button is-dark" (click)="cancelComment()">
+                        cancel
+                      </a>
+                      <a class="button is-dark" (click)="sendReply(comment._id)">
+                        Submit
+                      </a>
+                    </div>
+              </div>
+          </ng-template>
+
+         
+
+          <div *ngFor="let reply of comment?.replies">
+            <div *ngIf="reply == null; else showThis">
+              <div class="card replies_card">
+                <div class="card-content">
+                  <div class="control">
+                    <input class="input" type="text" placeholder="reply unavailable" disabled>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <ng-template #showThis>
+              <div class="card replies_card">
+                <div class="card-content">
+                  <div class="media">
+                    <div class="media-left">
+                      <figure class="image is-32x32">
+                        <img src="https://bulma.io/images/placeholders/96x96.png" alt="Placeholder image"
+                          class="is-rounded">
+                      </figure>
+                    </div>
+                    <div class="media-content">
+                      <div class="content">
+                        <p class="has-text-weight-light is-size-6 c_a">{{reply.author? reply.author: 'Anonymous'}}</p>
+                        <time datetime="" class="has-text-weight-light is-size-6">{{post.date | date : 'MMM dd'}}</time>
+                      </div>
+                    </div>
+                    <div class="media-right">
+                      <i class="fa fa-ellipsis-v"></i>
+                    </div>
+                  </div>
+                  <div class="content" [innerHTML]="reply.text">
+
+                  </div>
+                  <div class="">
+                    <div class="level is-mobile">
+                      <div class="level-left">
+                        <div class="level-item">
+                          <a>
+                            <span class="icon">
+                              <i class="fas fa-heart has-text-danger"></i>
+                            </span>
+                            <span>0</span>
+                          </a>
+                        </div>
+                      </div>
+                      <div class="level-right">
+                        <div class="level-item">
                           <a>
                             Delete
                           </a>
                         </div>
                         <div class="level-item">
-                            <a (click)="editComment(comment._id)">
-                              Edit
-                            </a>
-                          </div>
-                    <div class="level-item">
-                        <p>Reply</p>
+                          <a>
+                            Edit
+                          </a>
+                        </div>
+                        <div class="level-item">
+                          <a>Reply</a>
+                        </div>
+                      </div>
                     </div>
                   </div>
                 </div>
               </div>
-            </div>
-          </div>
-          <div *ngIf="comment._id=== loadid">
-              <ckeditor [editor]="Editor" [data]="editorData" (change)="onChange($event)">
-
-              </ckeditor>
-              <div class="buttons">
-                  <a class="button is-dark" (click)="cancelComment()">
-                      cancel 
-                    </a>
-                    <a class="button is-dark" (click)="updateComment(comment._id)">
-                      update
-                    </a>
-              </div>
+            </ng-template>
           </div>
         </div>
       </div>
@@ -179,9 +275,9 @@
   </div>
 </div>
 <footer class="footer">
-    <div class="content has-text-centered">
-      <p>
-        Shredder et Ralty
-      </p>
-    </div>
-  </footer>
+  <div class="content has-text-centered">
+    <p>
+      Shredder et Ralty
+    </p>
+  </div>
+</footer>

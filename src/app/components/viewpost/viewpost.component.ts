@@ -22,11 +22,16 @@ export class ViewpostComponent implements OnInit {
   addComment;
   previewedcomment;
   allcomments = [];
+  allreplies = [];
   editedcomemnt;
+  replyToComment: string;
   public Editor = BalloonEditor;
   public onChange({ editor }: ChangeEvent) {
     // const data = editor.getData();
     this.editedcomemnt = editor.getData()
+  }
+  public replyData({ editor }: ChangeEvent) {
+    this.replyToComment = editor.getData();
   }
   public editorData;
   public config: any = {
@@ -41,6 +46,8 @@ export class ViewpostComponent implements OnInit {
   periods;
   postId;
   loadid;
+  newloadid;
+  donots;
   commentForm: FormGroup;
 
 
@@ -64,6 +71,7 @@ export class ViewpostComponent implements OnInit {
           this.post = res;
           this.periods = res.body
           this.allcomments = res.comments
+          this.allreplies = res.comments.replies
           // console.log(this.allcomments)
           this.nooflikes = res.meta.likes;
           // console.log(this.nooflikes)
@@ -132,6 +140,13 @@ export class ViewpostComponent implements OnInit {
     }
   }
 
+  deleteThisComment(post: posts, comment){
+    console.log(post._id, comment._id)
+    this.hs.deleteComment(post._id, comment._id).subscribe((resp: any)=>{
+      console.log(resp)
+    })
+  }
+
   addThisComment(id) {
     const body = this.commentForm.value.body
     this.hs.createComment(id, body).subscribe((data: any) => {
@@ -144,16 +159,23 @@ export class ViewpostComponent implements OnInit {
   }
 
   editComment(comment_id){
+    this.newloadid = null;
+    if(!comment_id){
+      console.log('nothing')
+    }
+    console.log(comment_id)
     this.hs.getSingleCommentForUpdate(this.postId, comment_id).subscribe((data: any) => {
       if (data) {
-        this.loadid = data.comment._id;
-        this.editorData = data.comment.body;
+        console.log(data)
+        this.loadid = data._id;
+        this.editorData = data.body;
+        this.newloadid = null;
       }
     })
+    console.log(this.newloadid)
   }
   cancelComment(arg){
     this.loadid = arg
-    console.log(this.editedcomemnt)
   }
   updateComment(comment_id){
     this.hs.updateThisComment(this.postId, comment_id, this.editedcomemnt).subscribe((data: any)=>{
@@ -164,6 +186,30 @@ export class ViewpostComponent implements OnInit {
         this.cancelComment(this.loadid)
         location.reload()
       }
+    })
+  }
+
+  replyComment(comment_id){
+    this.donots =! this.donots
+    this.hs.getSingleCommentForUpdate(this.postId, comment_id).subscribe((dataa: any) => {
+      if (dataa) {
+        console.log(dataa)
+        this.newloadid = dataa._id;
+        this.editorData = dataa.body;
+        this.loadid = null;
+      }
+    })
+    // const text = 'haq haq'
+    // this.hs.postReply(this.postId, comment_id, text).subscribe((res: any)=>{
+    //   console.log(res)
+    //   // window.location.reload();
+    // })
+  }
+  sendReply(comment_id){
+    const text = this.replyToComment
+    this.hs.postReply(this.postId, comment_id, text).subscribe((res: any)=>{
+      console.log(res)
+      window.location.reload();
     })
   }
 }
