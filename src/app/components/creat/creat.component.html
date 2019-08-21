@@ -53,7 +53,7 @@
           Description
         </label>
         <div class="control">
-          <ckeditor [editor]="Editor" formControlName="body"></ckeditor>
+          <ckeditor [editor]="Editor" [config]="config" formControlName="body"></ckeditor>
         </div>
         <div *ngIf="body.touched && body.invalid" class="has-text-danger">
           <div *ngIf="body.errors.required">Please enter your post</div>

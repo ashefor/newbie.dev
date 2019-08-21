@@ -3,6 +3,9 @@ import { Component, OnInit, ViewChild, ElementRef, AfterViewInit } from '@angula
 import { FormBuilder, Validators, FormGroup, FormControl, FormArray } from '@angular/forms';
 import * as ClassicEditor from '@ckeditor/ckeditor5-build-classic';
 import { Router } from '@angular/router';
+import { CloudinaryImageUploadAdapter } from 'ckeditor-cloudinary-uploader-adapter';
+import { MyUploadAdapter } from 'src/app/imgUploader';
+// import * as Base64UploadAdapter from '@ckeditor/ckeditor5-upload'
 
 @Component({
   selector: 'app-creat',
@@ -23,7 +26,9 @@ export class CreatComponent implements OnInit {
   //   toolbar: ['heading', '|', 'bold', 'italic', 'link', 'bulletedList', 'numberedList', 'blockQuote']
   // }
   public config: any = {
-    placeholder: 'Description'
+    placeholder: 'Description',
+    //  plugins: [ Base64UploadAdapter ],
+    extraPlugins: [ this.MyCustomUploadAdapterPlugin ],
   }
   ngOnInit() {
     this.newPost = this.fb.group({
@@ -35,6 +40,21 @@ export class CreatComponent implements OnInit {
       })
     })
   }
+
+
+  // imagePluginFactory(editor) {
+  //   editor.plugins.get( 'FileRepository' ).createUploadAdapter = ( loader ) => {
+  //     return new CloudinaryImageUploadAdapter( loader, 'devnewbie', 'gji29xaj', 
+  //     [ 160, 500, 1000, 1052 ]);
+  //   };
+  // }
+  
+  MyCustomUploadAdapterPlugin( editor ) {
+    editor.plugins.get( 'FileRepository' ).createUploadAdapter = ( loader ) => {
+        // Configure the URL to the upload script in your back-end here!
+        return new MyUploadAdapter( loader );
+    };
+}
 
   showMenu() {
     document.getElementById('burger').classList.toggle("is-active")
