@@ -32,6 +32,9 @@ export class HomeService {
   likeThisPost(id: number){
     return this.http.put(`${this.postsURL}/${id}/likes`,{})
   }
+  likeThisComment(post_id:number, comment_id: number){
+    return this.http.put(`${this.postsURL}/${post_id}/comments/${comment_id}/likes`,{})
+  }
   createComment(id: number, body: string){
     return this.http.post(`${this.postsURL}/${id}/comments`, {body})
   }
@@ -46,5 +49,14 @@ export class HomeService {
   }
   deleteComment(post_id: number, comment_id: number){
     return this.http.delete(`${this.postsURL}/${post_id}/comments/${comment_id}`)
+  }
+  editReply(post_id: number, comment_id: number, reply_id: number, text: string){
+    return this.http.put(`${this.postsURL}/${post_id}/comments/${comment_id}/replies/${reply_id}`, {text})
+  }
+  deleteReply(post_id: number, comment_id: number, reply_id: number){
+    return this.http.delete(`${this.postsURL}/${post_id}/comments/${comment_id}/replies/${reply_id}`)
+  }
+  getReplyForUpdate(post_id: number, comment_id: number, reply_id: number){
+    return this.http.get(`${this.postsURL}/${post_id}/comments/${comment_id}/replies/${reply_id}`)
   }
 }

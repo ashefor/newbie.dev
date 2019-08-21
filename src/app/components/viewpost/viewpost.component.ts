@@ -10,6 +10,8 @@ import { Location } from '@angular/common';
 
 
 
+
+
 @Component({
   selector: 'app-viewpost',
   templateUrl: './viewpost.component.html',
@@ -25,6 +27,7 @@ export class ViewpostComponent implements OnInit {
   allreplies = [];
   editedcomemnt;
   replyToComment: string;
+  editReply: string
   public Editor = BalloonEditor;
   public onChange({ editor }: ChangeEvent) {
     // const data = editor.getData();
@@ -32,6 +35,9 @@ export class ViewpostComponent implements OnInit {
   }
   public replyData({ editor }: ChangeEvent) {
     this.replyToComment = editor.getData();
+  }
+  public editedReply({ editor }: ChangeEvent) {
+    this.editReply = editor.getData();
   }
   public editorData;
   public config: any = {
@@ -47,7 +53,9 @@ export class ViewpostComponent implements OnInit {
   postId;
   loadid;
   newloadid;
+  replyId;
   donots;
+  replyBody;
   commentForm: FormGroup;
 
 
@@ -74,8 +82,6 @@ export class ViewpostComponent implements OnInit {
           this.allreplies = res.comments.replies
           // console.log(this.allcomments)
           this.nooflikes = res.meta.likes;
-          // console.log(this.nooflikes)
-          // console.log(res.meta.tags)
           this.alltags = res.meta.tags
           this.readingTime(res.body)
           this.showTags(res.meta.tags)
@@ -83,7 +89,6 @@ export class ViewpostComponent implements OnInit {
       })
     })
   }
-
 
   showTags(tags) {
     if (tags.length > 0) {
@@ -126,6 +131,14 @@ export class ViewpostComponent implements OnInit {
     //   })
     // }
   }
+  likeComment(post_id, comment_id){
+    console.log(post_id, comment_id)
+    this.hs.likeThisComment(post_id, comment_id).subscribe((data:any)=>{
+      if(data){
+        console.log(data)
+      }
+    })
+  }
 
   deleteThisPost(poste: posts) {
     if (confirm(`Really delete ${poste.title}?`)) {
@@ -142,9 +155,11 @@ export class ViewpostComponent implements OnInit {
 
   deleteThisComment(post: posts, comment){
     console.log(post._id, comment._id)
-    this.hs.deleteComment(post._id, comment._id).subscribe((resp: any)=>{
-      console.log(resp)
-    })
+    if(confirm('really delete this comment?')){
+      this.hs.deleteComment(post._id, comment._id).subscribe((resp: any)=>{
+        console.log(resp)
+      })
+    }
   }
 
   addThisComment(id) {
@@ -159,7 +174,7 @@ export class ViewpostComponent implements OnInit {
   }
 
   editComment(comment_id){
-    this.newloadid = null;
+    // this.newloadid = null;
     if(!comment_id){
       console.log('nothing')
     }
@@ -172,10 +187,15 @@ export class ViewpostComponent implements OnInit {
         this.newloadid = null;
       }
     })
-    console.log(this.newloadid)
   }
   cancelComment(arg){
     this.loadid = arg
+  }
+  cancelReply(arg){
+    this.newloadid = arg
+  }
+  cancelEditReply(){
+    this.replyId = null;
   }
   updateComment(comment_id){
     this.hs.updateThisComment(this.postId, comment_id, this.editedcomemnt).subscribe((data: any)=>{
@@ -212,4 +232,36 @@ export class ViewpostComponent implements OnInit {
       window.location.reload();
     })
   }
+ 
+  deleteThisReply(post: posts, comment, reply){
+    console.log(post._id, comment._id, reply._id)
+   if(confirm('really delete this reply?')){
+    this.hs.deleteReply(post._id, comment._id, reply._id).subscribe((data:any)=>{
+      if(data){
+        console.log(data)
+        window.location.reload()
+      }
+    })
+   }
+  }
+  editThisReply(comment_id, reply_id){
+    console.log(reply_id)
+    this.hs.getReplyForUpdate(this.postId, comment_id, reply_id).subscribe((data: any)=>{
+      console.log(data)
+      this.replyId = data.reply._id
+      this.replyBody = data.reply.text
+      console.log(data.reply)
+    })
+  }
+  submitEditedReply(comment_id, reply_id){
+    const text = this.editReply;
+    console.log(text)
+    this.hs.editReply(this.postId, comment_id, reply_id, text).subscribe((data: any)=>{
+      if(data){
+        console.log(data)
+        window.location.reload()
+      }
+    })
+  }
+
 }

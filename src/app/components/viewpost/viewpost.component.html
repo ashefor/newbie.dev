@@ -44,7 +44,7 @@
             </div>
             <div class="media-content">
               <p class="title is-size-6 has-text-weight-normal">{{post.author}}</p>
-              <p class="subtitle is-size-6 has-text-weight-normal">{{post.date | date}} . <span>{{result}} min
+              <p class="subtitle is-size-6 has-text-weight-normal">{{post.date | dateAgo }} . <span>{{result}} min
                   read</span></p>
             </div>
             <div class="media-right">
@@ -130,7 +130,8 @@
                   <div class="media-content">
                     <div class="content">
                       <p class="has-text-weight-light is-size-6 c_a">{{comment.author? comment.author: 'Anonymous'}}</p>
-                      <time datetime="" class="has-text-weight-light is-size-6">{{post.date | date : 'MMM dd'}}</time>
+                      <time datetime="" class="has-text-weight-light is-size-6">{{comment.date | dateAgo}}</time>
+                      <!-- <time datetime="" class="has-text-weight-light is-size-6">{{post.date | date : 'MMM dd'}}</time> -->
                       <!-- <p class="subtitle has-text-weight-light is-6">{{post.date | date : 'MMM dd'}}</p> -->
                     </div>
                   </div>
@@ -145,27 +146,29 @@
                   <div class="level is-mobile">
                     <div class="level-left">
                       <div class="level-item">
-                        <a>
+                        <a (click)="likeComment(post._id, comment._id)">
                           <span class="icon">
                             <i class="fas fa-heart has-text-danger"></i>
                           </span>
-                          <span>0</span>
+                          <span>{{comment.likes}}</span>
                         </a>
                       </div>
                     </div>
                     <div class="level-right">
                       <div class="level-item">
-                        <a (click)="deleteThisComment(post, comment)">
-                          Delete
+                        <a (click)="deleteThisComment(post, comment)" class="has-text-danger" title="Delete comment">
+                            <i class="fas fa-trash"></i>
                         </a>
                       </div>
                       <div class="level-item">
-                        <a (click)="editComment(comment._id)">
-                          Edit
+                        <a (click)="editComment(comment._id)" class="has-text-primary" title="Edit comment">
+                            <i class="fas fa-edit"></i>
                         </a>
                       </div>
                       <div class="level-item">
-                        <a (click)="replyComment(comment._id)">Reply</a>
+                        <a (click)="replyComment(comment._id)" class="has-text-info" title="Reply comment">
+                            <i class="fas fa-reply"></i>
+                        </a>
                       </div>
                     </div>
                   </div>
@@ -190,7 +193,7 @@
     
                   </ckeditor>
                   <div class="buttons">
-                      <a class="button is-dark" (click)="cancelComment()">
+                      <a class="button is-dark" (click)="cancelReply()">
                         cancel
                       </a>
                       <a class="button is-dark" (click)="sendReply(comment._id)">
@@ -226,7 +229,7 @@
                     <div class="media-content">
                       <div class="content">
                         <p class="has-text-weight-light is-size-6 c_a">{{reply.author? reply.author: 'Anonymous'}}</p>
-                        <time datetime="" class="has-text-weight-light is-size-6">{{post.date | date : 'MMM dd'}}</time>
+                        <time datetime="" class="has-text-weight-light is-size-6">{{reply.date | dateAgo}}</time>
                       </div>
                     </div>
                     <div class="media-right">
@@ -250,22 +253,32 @@
                       </div>
                       <div class="level-right">
                         <div class="level-item">
-                          <a>
-                            Delete
+                          <a (click)="deleteThisReply(post, comment, reply)" class="has-text-danger" title="Delete reply">
+                              <i class="fas fa-trash"></i>
                           </a>
                         </div>
                         <div class="level-item">
-                          <a>
-                            Edit
+                          <a (click)="editThisReply(comment._id, reply._id)" class="has-text-primary" title="Edit reply">
+                              <i class="fas fa-edit"></i>
                           </a>
-                        </div>
-                        <div class="level-item">
-                          <a>Reply</a>
                         </div>
                       </div>
                     </div>
                   </div>
                 </div>
+              </div>
+              <div *ngIf="reply._id === replyId" class="editreplyeditor">
+                  <ckeditor [editor]="Editor" [data]="replyBody" (change)="editedReply($event)">
+    
+                  </ckeditor>
+                  <div class="buttons">
+                      <a class="button is-dark" (click)="cancelEditReply()">
+                        cancel
+                      </a>
+                      <a class="button is-dark" (click)="submitEditedReply(comment._id, reply._id)">
+                        Submit
+                      </a>
+                    </div>
               </div>
             </ng-template>
           </div>
