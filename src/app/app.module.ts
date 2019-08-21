@@ -12,8 +12,11 @@ import { ViewpostComponent } from './components/viewpost/viewpost.component';
 import { EditComponent } from './components/edit/edit.component';
 
 import { CKEditorModule } from '@ckeditor/ckeditor5-angular';
+import {NgPipesModule} from 'ngx-pipes';
+import { DateAgoPipe } from './pipes/date-ago.pipe';
+// import { MyUploadAdapter } from './imgUploader';
 
-
+// import { MyUploadAdapter } from
 
 @NgModule({
   declarations: [
@@ -21,14 +24,16 @@ import { CKEditorModule } from '@ckeditor/ckeditor5-angular';
     HomeComponent,
     CreatComponent,
     ViewpostComponent,
-    EditComponent
+    EditComponent,
+    DateAgoPipe,
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     HttpClientModule,
     ReactiveFormsModule,
-    CKEditorModule
+    CKEditorModule,
+    NgPipesModule
   ],
   providers: [],
   bootstrap: [AppComponent]
