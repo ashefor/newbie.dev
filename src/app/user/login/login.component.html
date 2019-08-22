@@ -1,26 +1,32 @@
 <app-navbar></app-navbar>
 <div class="section">
-  <div class="container">
-    <form action="" [formGroup]="loginForm" (ngSubmit)="onSubmit(loginForm.value)" autocomplete="off">
-      <div class="field">
+  <div class="wrapper">
+    <form class="column is-6" [formGroup]="loginForm" (ngSubmit)="onSubmit(loginForm.value)" autocomplete="off">
+      <div class="field" [ngClass]="{'error': !validateUserName()}">
         <label for="">
           Username:
         </label>
+        <div *ngIf="!validateUserName()" class="has-text-danger is-pulled-right">
+          Please enter a username
+        </div>
         <div class="control">
           <input type="text" class="input" formControlName="username">
         </div>
       </div>
-      <div class="field">
+      <div class="field" [ngClass]="{'error': !validatePassword()}">
         <label for="">
           Password:
         </label>
+        <div *ngIf="!validatePassword()" class="has-text-danger is-pulled-right">
+          Please enter a password
+        </div>
         <div class="control">
           <input type="password" class="input" formControlName="password">
         </div>
       </div>
       <div class="field">
         <div class="buttons">
-          <button class="button is-primary" type="submit">Login</button>
+          <button class="button is-primary" type="submit" [disabled]="loginForm.invalid">Login</button>
           <button class="button is-dark" type="button" (click)="cancel()">Cancel</button>
         </div>
       </div>

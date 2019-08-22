@@ -6,11 +6,12 @@ import { userRoutes } from './user.routes';
 import { ErrorComponent } from './error/error.component';
 import { SharedModule } from '../components/shared/shared.module';
 import { ReactiveFormsModule } from '@angular/forms';
+import { ProfileComponent } from './profile/profile.component';
 
 @NgModule({
   declarations: [
     LoginComponent, 
-    ErrorComponent],
+    ErrorComponent, ProfileComponent],
   imports: [
     CommonModule,
     SharedModule,

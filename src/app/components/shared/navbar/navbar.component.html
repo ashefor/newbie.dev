@@ -23,7 +23,7 @@
           <a *ngIf="!auth.isAuthenticated()" [routerLink]="['/users/login']" class="button is-primary is-outlined">
             Log in
           </a>
-          <a *ngIf="auth.isAuthenticated()">Welcome {{auth.currentUser.userName}}</a>
+          <a *ngIf="auth.isAuthenticated()" [routerLink]="['/users/profile']" >Welcome {{auth.currentUser.firstName}}</a>
         </div>
       </div>
     </div>

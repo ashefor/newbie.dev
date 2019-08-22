@@ -1,0 +1,36 @@
+<app-navbar></app-navbar>
+<div class="section">
+  <div class="wrapper">
+    <form class="column is-6" [formGroup]="profileForm" (ngSubmit)="saveProfile(profileForm.value)" autocomplete="off">
+      <div class="field"
+        [ngClass]="{'error': !validateFirstName() }">
+        <label for="">
+          Firstname:
+        </label>
+        <div *ngIf="!validateFirstName()" class="has-text-danger is-pulled-right">
+          First name is required
+        </div>
+        <div class="control">
+          <input type="text" class="input" formControlName="firstName">
+        </div>
+      </div>
+      <div class="field" [ngClass]="{'error': !validateLastName()}">
+        <label for="">
+          Lastname:
+        </label>
+        <div *ngIf="!validateLastName()" class="has-text-danger is-pulled-right">
+          Last name is required
+        </div>
+        <div class="control">
+          <input type="text" class="input" formControlName="lastName">
+        </div>
+      </div>
+      <div class="field">
+        <div class="buttons">
+          <button class="button is-primary" type="submit" [disabled]="profileForm.invalid">Save</button>
+          <button class="button is-dark" type="button" (click)="cancel()">Cancel</button>
+        </div>
+      </div>
+    </form>
+  </div>
+</div>
