@@ -6,7 +6,7 @@
         Newbie
       </a>
 
-      <a role="button" class="navbar-burger burger" (click)="showMenu()" id="burger" aria-label="menu"
+      <a #menu (click)="toggleMenu($event)" role="button" class="navbar-burger burger" id="burger" aria-label="menu"
         aria-expanded="false" data-target="navbarBasicExample">
         <span aria-hidden="true"></span>
         <span aria-hidden="true"></span>
@@ -14,7 +14,7 @@
       </a>
     </div>
 
-    <div id="navbarBasicExample" class="navbar-menu">
+    <div #navbarMenu id="navbarBasicExample" class="navbar-menu">
       <div class="navbar-end">
         <a class="navbar-item" [routerLink]="['/posts/create']">
           Write a post

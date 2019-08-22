@@ -36,11 +36,6 @@ export class EditComponent implements OnInit {
     })
     
   }
-
-  showMenu() {
-    document.getElementById('burger').classList.toggle("is-active")
-    document.getElementById('navbarBasicExample').classList.toggle('is-active')
-  }
   
 
   updateFrm(){
@@ -51,7 +46,7 @@ export class EditComponent implements OnInit {
    this.hs.updatePost(this.updateform.value).subscribe((data:any)=>{
     //  console.log(data)
     if(data){
-      this.router.navigate([`/${this.id}`])
+      this.router.navigate([`/posts/${this.id}`])
     }
    })
   }
