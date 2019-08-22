@@ -1,5 +1,5 @@
 import { FormBuilder, FormGroup, FormControl } from '@angular/forms';
-import { HomeService } from './../../services/home.service';
+import { PostService } from '../../../services/home.service';
 import { ActivatedRoute, Params, Router } from '@angular/router';
 import { Component, OnInit } from '@angular/core';
 import * as ClassicEditor from '@ckeditor/ckeditor5-build-classic';
@@ -15,7 +15,7 @@ export class EditComponent implements OnInit {
   public Editor = ClassicEditor;
 
   editpost = {}
-  constructor(private route: ActivatedRoute, private hs: HomeService, private fb: FormBuilder, private router: Router) { }
+  constructor(private route: ActivatedRoute, private hs: PostService, private fb: FormBuilder, private router: Router) { }
   id;
   updateform: FormGroup;
   ngOnInit() {

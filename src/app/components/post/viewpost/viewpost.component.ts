@@ -1,5 +1,5 @@
 import { FormGroup, FormBuilder, FormControl } from '@angular/forms';
-import { HomeService } from './../../services/home.service';
+import { PostService } from '../../../services/home.service';
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Params, Router } from '@angular/router';
 
@@ -60,7 +60,7 @@ export class ViewpostComponent implements OnInit {
 
 
   constructor(private route: ActivatedRoute, 
-    private hs: HomeService, 
+    private hs: PostService, 
     private router: Router, 
     private fb: FormBuilder, 
     private location: Location) { }

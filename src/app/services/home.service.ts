@@ -5,7 +5,7 @@ import { HttpClient } from '@angular/common/http';
 @Injectable({
   providedIn: 'root'
 })
-export class HomeService {
+export class PostService {
   private postsURL = 'http://localhost:5000/api/posts'
   constructor(private http: HttpClient) { }
 

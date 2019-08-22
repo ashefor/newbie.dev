@@ -1,16 +1,9 @@
-import { CreatComponent } from './components/creat/creat.component';
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
-import { HomeComponent } from './components/home/home.component';
-import { ViewpostComponent } from './components/viewpost/viewpost.component';
-import { EditComponent } from './components/edit/edit.component';
 
 const routes: Routes = [
   {path: 'users', loadChildren: './user/user.module#UserModule'},
-  {path: 'home', component: HomeComponent},
-  {path: 'create', component: CreatComponent},
-  {path: ':id', component: ViewpostComponent},
-  {path: ':id/edit', component: EditComponent},
+  {path: 'posts', loadChildren: './components/post/post.module#PostModule'}
 ];
 
 @NgModule({

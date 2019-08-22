@@ -1,36 +1,4 @@
-<div class="navcontainer">
-  <nav class="navbar is-fixed-top is-white" role="navigation" aria-label="main navigation">
-    <div class="navbar-brand">
-      <a class="navbar-item is-size-3 is-uppercase" [routerLink]="['/home']" routerLinkActive="router-link-active">
-        <!-- <img src="https://bulma.io/images/bulma-logo.png" width="112" height="28"> -->
-        Newbie
-      </a>
-
-      <a role="button" class="navbar-burger burger" (click)="showMenu()" id="burger" aria-label="menu"
-        aria-expanded="false" data-target="navbarBasicExample">
-        <span aria-hidden="true"></span>
-        <span aria-hidden="true"></span>
-        <span aria-hidden="true"></span>
-      </a>
-    </div>
-
-    <div id="navbarBasicExample" class="navbar-menu">
-      <div class="navbar-end">
-        <a class="navbar-item" [routerLink]="['/create']" routerLinkActive="router-link-active">
-          Write a post
-        </a>
-        <a class="navbar-item has-text-primary has-text-weight-semibold">
-          Sign In
-        </a>
-        <div class="navbar-item">
-          <a class="button is-primary is-outlined">
-            Log in
-          </a>
-        </div>
-      </div>
-    </div>
-  </nav>
-</div>
+<app-navbar></app-navbar>
 <div class="section">
   <div class="post_wrapper">
     <div class="" *ngIf="showpost">

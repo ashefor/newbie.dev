@@ -1,4 +1,4 @@
-import { HomeService } from './../../services/home.service';
+import { PostService } from '../../../services/home.service';
 import { Component, OnInit, ViewChild, ElementRef, AfterViewInit } from '@angular/core';
 import { FormBuilder, Validators, FormGroup, FormControl, FormArray } from '@angular/forms';
 import * as ClassicEditor from '@ckeditor/ckeditor5-build-classic';
@@ -21,7 +21,7 @@ export class CreatComponent implements OnInit {
   loading;
   alltags = ['general', 'frontend', 'backend', 'javascript', 'framework', 'typescript', 'design', 'vue', 'react', 'angular'];
   selectedtags = []
-  constructor(private fb: FormBuilder, private hs: HomeService, private router: Router) { }
+  constructor(private fb: FormBuilder, private hs: PostService, private router: Router) { }
   // config: any = {
   //   toolbar: ['heading', '|', 'bold', 'italic', 'link', 'bulletedList', 'numberedList', 'blockQuote']
   // }

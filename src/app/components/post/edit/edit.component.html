@@ -1,0 +1,31 @@
+<app-navbar></app-navbar>
+<div class="section">
+  <div class="wrapper">
+    <div class="card">
+      <div class="card-content">
+        <form [formGroup]="updateform" (ngSubmit)="updateFrm()">
+          <div class="field">
+            <label class="label">Title</label>
+            <div class="control">
+              <input type="text" class="input title is-size-4 is-medium" formControlName="title">
+            </div>
+          </div>
+         <div class="field">
+           <label class="label">
+             Post
+           </label>
+           <div class="control">
+              <ckeditor [editor]="Editor" formControlName="body"></ckeditor>
+           </div>
+         </div>
+         <button type="submit" class="button is-success is-medium">
+            <span class="icon is-small">
+                <i class="fas fa-save"></i>
+              </span>
+              <span>Save</span>
+         </button>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>

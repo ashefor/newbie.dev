@@ -1,5 +1,5 @@
-import { posts } from './../../model/post.model';
-import { HomeService } from './../../services/home.service';
+import { posts } from '../../../model/post.model';
+import { PostService } from '../../../services/home.service';
 import { Component, OnInit } from '@angular/core';
 
 @Component({
@@ -15,7 +15,7 @@ export class HomeComponent implements OnInit {
   result = [];
   showTags = false;
   alltags = []
-  constructor(private hs: HomeService) { }
+  constructor(private hs: PostService) { }
 
   ngOnInit() {
     this.hs.getAllPosts().subscribe((data:any) =>{
