@@ -31,7 +31,7 @@ export class MyUploadAdapter {
         // integration to choose the right communication channel. This example uses
         // a POST request with JSON as a data structure but your configuration
         // could be different.
-        xhr.open( 'POST', 'http://localhost:5000/api/posts', true );
+        xhr.open( 'POST', 'https://us-central1-fb-cloud-functions-demo.cloudfunctions.net/uploadFile', true );
         xhr.responseType = 'json';
     }
 
@@ -63,6 +63,7 @@ export class MyUploadAdapter {
             resolve( {
                 default: response.url
             } );
+            console.log(response)
         } );
 
         // Upload progress when it is supported. The file loader has the #uploadTotal and #uploaded

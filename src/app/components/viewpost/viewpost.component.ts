@@ -40,6 +40,7 @@ export class ViewpostComponent implements OnInit {
     this.editReply = editor.getData();
   }
   public editorData;
+  public replyBody;
   public config: any = {
     placeholder: 'Add a comment'
   }
@@ -51,11 +52,10 @@ export class ViewpostComponent implements OnInit {
   result;
   periods;
   postId;
-  loadid;
-  newloadid;
+  commentId;
+  newCommentId;
   replyId;
   donots;
-  replyBody;
   commentForm: FormGroup;
 
 
@@ -70,23 +70,26 @@ export class ViewpostComponent implements OnInit {
       body: ['']
     })
 
-    this.route.params.subscribe((params: Params) => {
-      console.log(params)
-      this.postId = params.id;
-      this.hs.viewOnePost(params.id).subscribe((res: any) => {
-        if (res) {
-          this.showpost = true;
-          this.post = res;
-          this.periods = res.body
-          this.allcomments = res.comments
-          this.allreplies = res.comments.replies
-          // console.log(this.allcomments)
-          this.nooflikes = res.meta.likes;
-          this.alltags = res.meta.tags
-          this.readingTime(res.body)
-          this.showTags(res.meta.tags)
-        }
-      })
+    this.postId = this.route.snapshot.params['id'];
+    // this.route.params.subscribe((params: Params) => {
+    //   console.log(params)
+    //   this.postId = params.id;
+     
+    // })
+    this.hs.viewOnePost(this.route.snapshot.params['id']).subscribe((res: any) => {
+      if (res) {
+        console.log(res)
+        this.showpost = true;
+        this.post = res;
+        this.periods = res.body
+        this.allcomments = res.comments
+        this.allreplies = res.comments.replies
+        // console.log(this.allcomments)
+        this.nooflikes = res.meta.likes;
+        this.alltags = res.meta.tags
+        this.readingTime(res.body)
+        this.showTags(res.meta.tags)
+      }
     })
   }
 
@@ -174,7 +177,7 @@ export class ViewpostComponent implements OnInit {
   }
 
   editComment(comment_id){
-    // this.newloadid = null;
+    // this.newCommentId = null;
     if(!comment_id){
       console.log('nothing')
     }
@@ -182,48 +185,49 @@ export class ViewpostComponent implements OnInit {
     this.hs.getSingleCommentForUpdate(this.postId, comment_id).subscribe((data: any) => {
       if (data) {
         console.log(data)
-        this.loadid = data._id;
+        this.commentId = data._id;
         this.editorData = data.body;
-        this.newloadid = null;
+        this.newCommentId = null;
       }
     })
   }
   cancelComment(arg){
-    this.loadid = arg
+    this.commentId = arg
   }
   cancelReply(arg){
-    this.newloadid = arg
+    this.newCommentId = arg
   }
   cancelEditReply(){
     this.replyId = null;
   }
   updateComment(comment_id){
-    this.hs.updateThisComment(this.postId, comment_id, this.editedcomemnt).subscribe((data: any)=>{
+    let comment;
+    if(this.editedcomemnt){
+      comment = this.editedcomemnt
+    }else{
+      comment = this.editorData
+    }
+    this.hs.updateThisComment(this.postId, comment_id, comment).subscribe((data: any)=>{
       console.log(data)
       if(data){
-        this.router.navigate([`/${this.postId}`])
-        this.loadid = null;
-        this.cancelComment(this.loadid)
+        // this.router.navigate([`/${this.postId}`])
+        this.commentId = null;
+        this.cancelComment(this.commentId)
         location.reload()
       }
     })
   }
 
-  replyComment(comment_id){
+  showReplyComment(comment_id){
     this.donots =! this.donots
     this.hs.getSingleCommentForUpdate(this.postId, comment_id).subscribe((dataa: any) => {
       if (dataa) {
         console.log(dataa)
-        this.newloadid = dataa._id;
+        this.newCommentId = dataa._id;
         this.editorData = dataa.body;
-        this.loadid = null;
+        this.commentId = null;
       }
     })
-    // const text = 'haq haq'
-    // this.hs.postReply(this.postId, comment_id, text).subscribe((res: any)=>{
-    //   console.log(res)
-    //   // window.location.reload();
-    // })
   }
   sendReply(comment_id){
     const text = this.replyToComment
@@ -254,7 +258,14 @@ export class ViewpostComponent implements OnInit {
     })
   }
   submitEditedReply(comment_id, reply_id){
-    const text = this.editReply;
+    let text;
+    // const text = this.editReply;
+    // console.log(text)
+    if(this.editReply){
+      text = this.editReply
+    }else{
+      text = this.replyBody
+    }
     console.log(text)
     this.hs.editReply(this.postId, comment_id, reply_id, text).subscribe((data: any)=>{
       if(data){

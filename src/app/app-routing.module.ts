@@ -6,10 +6,11 @@ import { ViewpostComponent } from './components/viewpost/viewpost.component';
 import { EditComponent } from './components/edit/edit.component';
 
 const routes: Routes = [
+  {path: 'users', loadChildren: './user/user.module#UserModule'},
   {path: 'home', component: HomeComponent},
   {path: 'create', component: CreatComponent},
   {path: ':id', component: ViewpostComponent},
-  {path: ':id/edit', component: EditComponent}
+  {path: ':id/edit', component: EditComponent},
 ];
 
 @NgModule({

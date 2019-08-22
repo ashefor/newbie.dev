@@ -166,7 +166,7 @@
                         </a>
                       </div>
                       <div class="level-item">
-                        <a (click)="replyComment(comment._id)" class="has-text-info" title="Reply comment">
+                        <a (click)="showReplyComment(comment._id)" class="has-text-info" title="Reply comment">
                             <i class="fas fa-reply"></i>
                         </a>
                       </div>
@@ -175,7 +175,7 @@
                 </div>
               </div>
             </div>
-            <div *ngIf="comment?._id === loadid">
+            <div *ngIf="comment?._id === commentId">
                 <ckeditor [editor]="Editor" [data]="editorData" (change)="onChange($event)">
     
                 </ckeditor>
@@ -188,7 +188,7 @@
                   </a>
                 </div>
               </div>
-              <div *ngIf="comment?._id === newloadid">
+              <div *ngIf="comment?._id === newCommentId">
                   <ckeditor [editor]="Editor" (change)="replyData($event)">
     
                   </ckeditor>
