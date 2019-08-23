@@ -1,10 +1,10 @@
 import { FormGroup, FormBuilder, FormControl } from '@angular/forms';
 import { PostService } from '../../../services/home.service';
-import { Component, OnInit, ViewChild, ElementRef, HostListener, AfterViewInit } from '@angular/core';
+import { Component, OnInit, ViewChild, ElementRef, HostListener, AfterViewInit, Output, EventEmitter } from '@angular/core';
 import { ActivatedRoute, Params, Router } from '@angular/router';
 
 import * as BalloonEditor from '@ckeditor/ckeditor5-build-balloon';
-import { posts } from 'src/app/model/post.model';
+import { posts, IComments } from 'src/app/model/post.model';
 import { ChangeEvent } from '@ckeditor/ckeditor5-angular/ckeditor.component';
 import { Location } from '@angular/common';
 
@@ -18,8 +18,7 @@ import { Location } from '@angular/common';
   styleUrls: ['./viewpost.component.css']
 })
 export class ViewpostComponent implements OnInit {
-  post = {}
-  poste: posts[]
+  post: posts;
   showpost;
   addComment;
   previewedcomment;
@@ -51,7 +50,6 @@ export class ViewpostComponent implements OnInit {
   showcomment = false;
   result;
   periods;
-  postId;
   commentId;
   newCommentId;
   replyId;
@@ -61,7 +59,7 @@ export class ViewpostComponent implements OnInit {
   elementPosition: any;
   newposition: any;
   @ViewChild('leftSide') leftMenu: ElementRef<HTMLElement>;
-  @ViewChild('postBody') postDetails: ElementRef<HTMLElement>
+  @ViewChild('postBody') postDetails: ElementRef<HTMLElement>;
 
   constructor(private route: ActivatedRoute, 
     private hs: PostService, 
@@ -70,35 +68,16 @@ export class ViewpostComponent implements OnInit {
     private location: Location,
     public el: ElementRef<HTMLElement>) { }
     public innerWidth: any;
-   
-  
-    // ngAfterViewInit(){
-    //   let inner = Math.max(
-    //     document.body.scrollHeight, document.documentElement.scrollHeight,
-    //     document.body.offsetHeight, document.documentElement.offsetHeight,
-    //     document.body.clientHeight, document.documentElement.clientHeight,
-    //   );
-      
-    // console.log(inner)
-    // }
   
   ngOnInit() {
-    // console.log(this.innerWidth)
     this.commentForm = this.fb.group({
       body: ['']
     })
-
-    this.postId = this.route.snapshot.params['id'];
-    // this.route.params.subscribe((params: Params) => {
-    //   console.log(params)
-    //   this.postId = params.id;
-     
-    // })
     this.hs.viewOnePost(this.route.snapshot.params['id']).subscribe((res: any) => {
       if (res) {
-        console.log(res)
         this.showpost = true;
         this.post = res;
+        console.log(this.post)
         this.periods = res.body
         this.allcomments = res.comments
         this.allreplies = res.comments.replies
@@ -113,9 +92,9 @@ export class ViewpostComponent implements OnInit {
 
   @HostListener('window:scroll', ['$event'])
     handleScroll(){
-      const newpos = this.el.nativeElement.scrollTop
-      const h = this.postDetails.nativeElement.offsetTop
-      const t = this.postDetails.nativeElement.clientHeight
+      // const newpos = this.el.nativeElement.scrollTop
+      // const h = this.postDetails.nativeElement.offsetTop
+      // const t = this.postDetails.nativeElement.clientHeight
       const th = this.postDetails.nativeElement.scrollHeight
       // console.log(h,t,th)
       const scrollpos = window.pageYOffset;
@@ -176,9 +155,9 @@ export class ViewpostComponent implements OnInit {
     })
   }
 
-  deleteThisPost(poste: posts) {
-    if (confirm(`Really delete ${poste.title}?`)) {
-      this.hs.deletePost(poste._id).subscribe((data: any) => {
+  deleteThisPost(post: posts) {
+    if (confirm(`Really delete ${post.title}?`)) {
+      this.hs.deletePost(post._id).subscribe((data: any) => {
         if (data) {
           this.router.navigate(['/home'])
         }
@@ -198,24 +177,22 @@ export class ViewpostComponent implements OnInit {
     }
   }
 
-  addThisComment(id) {
-    const body = this.commentForm.value.body
-    this.hs.createComment(id, body).subscribe((data: any) => {
-      if (data) {
-        this.commentForm.reset()
-        location.reload()
+  saveNewComment(comment: IComments){
+    // console.log(this.post)
+    this.hs.createComment(this.post._id, comment.body).subscribe((data: any)=>{
+      if(data){
+        this.post.comments.push(comment)
         this.addComment = false;
       }
     })
   }
 
   editComment(comment_id){
-    // this.newCommentId = null;
     if(!comment_id){
       console.log('nothing')
     }
     console.log(comment_id)
-    this.hs.getSingleCommentForUpdate(this.postId, comment_id).subscribe((data: any) => {
+    this.hs.getSingleCommentForUpdate(this.post._id, comment_id).subscribe((data: any) => {
       if (data) {
         console.log(data)
         this.commentId = data._id;
@@ -240,10 +217,10 @@ export class ViewpostComponent implements OnInit {
     }else{
       comment = this.editorData
     }
-    this.hs.updateThisComment(this.postId, comment_id, comment).subscribe((data: any)=>{
+    this.hs.updateThisComment(this.post._id, comment_id, comment).subscribe((data: any)=>{
       console.log(data)
       if(data){
-        // this.router.navigate([`/${this.postId}`])
+        // this.router.navigate([`/${this.post._id}`])
         this.commentId = null;
         this.cancelComment(this.commentId)
         location.reload()
@@ -253,7 +230,7 @@ export class ViewpostComponent implements OnInit {
 
   showReplyComment(comment_id){
     this.donots =! this.donots
-    this.hs.getSingleCommentForUpdate(this.postId, comment_id).subscribe((dataa: any) => {
+    this.hs.getSingleCommentForUpdate(this.post._id, comment_id).subscribe((dataa: any) => {
       if (dataa) {
         console.log(dataa)
         this.newCommentId = dataa._id;
@@ -264,7 +241,7 @@ export class ViewpostComponent implements OnInit {
   }
   sendReply(comment_id){
     const text = this.replyToComment
-    this.hs.postReply(this.postId, comment_id, text).subscribe((res: any)=>{
+    this.hs.postReply(this.post._id, comment_id, text).subscribe((res: any)=>{
       console.log(res)
       window.location.reload();
     })
@@ -283,7 +260,7 @@ export class ViewpostComponent implements OnInit {
   }
   editThisReply(comment_id, reply_id){
     console.log(reply_id)
-    this.hs.getReplyForUpdate(this.postId, comment_id, reply_id).subscribe((data: any)=>{
+    this.hs.getReplyForUpdate(this.post._id, comment_id, reply_id).subscribe((data: any)=>{
       console.log(data)
       this.replyId = data.reply._id
       this.replyBody = data.reply.text
@@ -300,7 +277,7 @@ export class ViewpostComponent implements OnInit {
       text = this.replyBody
     }
     console.log(text)
-    this.hs.editReply(this.postId, comment_id, reply_id, text).subscribe((data: any)=>{
+    this.hs.editReply(this.post._id, comment_id, reply_id, text).subscribe((data: any)=>{
       if(data){
         console.log(data)
         window.location.reload()

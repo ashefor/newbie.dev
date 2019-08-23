@@ -1,0 +1,68 @@
+<div *ngFor="let reply of replies">
+  <div class="card replies_card">
+    <div class="card-content">
+      <div class="media">
+        <div class="media-left">
+          <figure class="image is-32x32">
+            <img src="https://bulma.io/images/placeholders/96x96.png" alt="Placeholder image"
+              class="is-rounded">
+          </figure>
+        </div>
+        <div class="media-content">
+          <div class="content">
+            <p class="has-text-weight-light is-size-6 c_a">{{reply.author? reply.author: 'Anonymous'}}
+            </p>
+            <time datetime="" class="has-text-weight-light is-size-6">{{reply.date | dateAgo}}</time>
+          </div>
+        </div>
+        <div class="media-right">
+          <i class="fa fa-ellipsis-v"></i>
+        </div>
+      </div>
+      <div class="content" [innerHTML]="reply.text">
+
+      </div>
+      <div class="">
+        <div class="level is-mobile" *ngIf="!replyId">
+          <div class="level-left">
+            <div class="level-item">
+              <a>
+                <span class="icon">
+                  <i class="fas fa-heart has-text-danger"></i>
+                </span>
+                <span>0</span>
+              </a>
+            </div>
+          </div>
+          <div class="level-right">
+            <div class="level-item">
+              <a (click)="deleteThisReply(post, comment, reply)" class="has-text-danger"
+                title="Delete reply">
+                <i class="fas fa-trash"></i>
+              </a>
+            </div>
+            <div class="level-item">
+              <a (click)="editThisReply(comment._id, reply._id)" class="has-text-primary"
+                title="Edit reply">
+                <i class="fas fa-edit"></i>
+              </a>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div *ngIf="reply._id === replyId" class="editreplyeditor">
+        <ckeditor [editor]="Editor" [data]="replyBody" (change)="editedReply($event)">
+
+        </ckeditor>
+        <div class="buttons">
+          <a class="button is-dark" (click)="cancelEditReply()">
+            cancel
+          </a>
+          <a class="button is-dark" (click)="submitEditedReply(comment._id, reply._id)">
+            Submit
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

@@ -114,7 +114,7 @@ export class CreatComponent implements OnInit {
     this.hs.createPost(this.newPost.value).subscribe((data: any) => {
       console.log(data)
       if(data){
-        this.router.navigate(['/home'])
+        this.router.navigate(['/posts'])
         this.loading = false
       }
     })

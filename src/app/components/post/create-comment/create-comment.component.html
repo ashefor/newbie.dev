@@ -1,0 +1,10 @@
+<div style="border: 2px solid" class="field c_w">
+  <form [formGroup]="commentForm">
+    <div class="control t_w">
+      <ckeditor [editor]="Editor" formControlName="body"></ckeditor>
+    </div>
+    <div class="buttons is-right b_w">
+      <span class="button is-info" (click)="addThisComment(commentForm.value)">Submit</span>
+    </div>
+  </form>
+</div>

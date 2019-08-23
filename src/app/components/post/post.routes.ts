@@ -1,8 +1,8 @@
 import { Routes } from '@angular/router';
 import { HomeComponent } from './home/home.component';
-import { CreatComponent } from './creat/creat.component';
+import { CreatComponent } from './create-post/creat.component';
 import { ViewpostComponent } from './viewpost/viewpost.component';
-import { EditComponent } from './edit/edit.component';
+import { EditComponent } from './edit-post/edit.component';
 
 export const postRoutes: Routes = [
     {path: '', component: HomeComponent},

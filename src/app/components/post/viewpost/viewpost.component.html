@@ -81,18 +81,9 @@
                   Add a comment
                 </p>
               </a>
-              <div *ngIf="addComment" style="border: 2px solid" class="field c_w">
-                <form [formGroup]="commentForm">
-                  <div class="control t_w">
-                    <ckeditor [editor]="Editor" formControlName="body" [config]="config"></ckeditor>
-                  </div>
-                  <div class="buttons is-right b_w">
-                    <span class="button is-info" (click)="addThisComment(post._id)">Submit</span>
-                  </div>
-                </form>
-              </div>
+              <app-create-comment *ngIf="addComment" (saveNewComment)="saveNewComment($event)"></app-create-comment>
             </div>
-            <div *ngFor="let comment of post.comments.reverse(); let index = y" class="d_c">
+            <!-- <div *ngFor="let comment of post.comments.reverse(); let index = y" class="d_c">
 
               <div *ngIf="comment == null; else showOtherComment">
                 <div class="card s_c">
@@ -188,32 +179,6 @@
                     </div>
                   </div>
                 </div>
-                <!-- <div *ngIf="comment?._id === commentId">
-                  <ckeditor [editor]="Editor" [data]="editorData" (change)="onChange($event)">
-      
-                  </ckeditor>
-                  <div class="buttons">
-                    <a class="button is-dark" (click)="cancelComment()">
-                      cancel
-                    </a>
-                    <a class="button is-dark" (click)="updateComment(comment._id)">
-                      update
-                    </a>
-                  </div>
-                </div> -->
-                <!-- <div *ngIf="comment?._id === newCommentId">
-                    <ckeditor [editor]="Editor" (change)="replyData($event)">
-      
-                    </ckeditor>
-                    <div class="buttons">
-                        <a class="button is-dark" (click)="cancelReply()">
-                          cancel
-                        </a>
-                        <a class="button is-dark" (click)="sendReply(comment._id)">
-                          Submit
-                        </a>
-                      </div>
-                </div> -->
               </ng-template>
 
 
@@ -296,22 +261,12 @@
                       </div>
                     </div>
                   </div>
-                  <!-- <div *ngIf="reply._id === replyId" class="editreplyeditor">
-                    <ckeditor [editor]="Editor" [data]="replyBody" (change)="editedReply($event)">
-
-                    </ckeditor>
-                    <div class="buttons">
-                      <a class="button is-dark" (click)="cancelEditReply()">
-                        cancel
-                      </a>
-                      <a class="button is-dark" (click)="submitEditedReply(comment._id, reply._id)">
-                        Submit
-                      </a>
-                    </div>
-                  </div> -->
                 </ng-template>
               </div>
-            </div>
+            </div> -->
+            <hr>
+
+            <app-comments-list [comments]="post.comments"></app-comments-list>
           </div>
         </div>
       </div>
