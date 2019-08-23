@@ -1,6 +1,6 @@
 import { FormGroup, FormBuilder, FormControl } from '@angular/forms';
 import { PostService } from '../../../services/home.service';
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild, ElementRef, HostListener, AfterViewInit } from '@angular/core';
 import { ActivatedRoute, Params, Router } from '@angular/router';
 
 import * as BalloonEditor from '@ckeditor/ckeditor5-build-balloon';
@@ -57,15 +57,33 @@ export class ViewpostComponent implements OnInit {
   replyId;
   donots;
   commentForm: FormGroup;
-
+  move = true;
+  elementPosition: any;
+  newposition: any;
+  @ViewChild('leftSide') leftMenu: ElementRef<HTMLElement>;
+  @ViewChild('postBody') postDetails: ElementRef<HTMLElement>
 
   constructor(private route: ActivatedRoute, 
     private hs: PostService, 
     private router: Router, 
     private fb: FormBuilder, 
-    private location: Location) { }
+    private location: Location,
+    public el: ElementRef<HTMLElement>) { }
+    public innerWidth: any;
+   
+  
+    // ngAfterViewInit(){
+    //   let inner = Math.max(
+    //     document.body.scrollHeight, document.documentElement.scrollHeight,
+    //     document.body.offsetHeight, document.documentElement.offsetHeight,
+    //     document.body.clientHeight, document.documentElement.clientHeight,
+    //   );
+      
+    // console.log(inner)
+    // }
   
   ngOnInit() {
+    // console.log(this.innerWidth)
     this.commentForm = this.fb.group({
       body: ['']
     })
@@ -93,6 +111,25 @@ export class ViewpostComponent implements OnInit {
     })
   }
 
+  @HostListener('window:scroll', ['$event'])
+    handleScroll(){
+      const newpos = this.el.nativeElement.scrollTop
+      const h = this.postDetails.nativeElement.offsetTop
+      const t = this.postDetails.nativeElement.clientHeight
+      const th = this.postDetails.nativeElement.scrollHeight
+      // console.log(h,t,th)
+      const scrollpos = window.pageYOffset;
+      // console.log(scrollpos)
+      // }
+      if(scrollpos >= th){
+          this.move = false
+      }
+      else{
+        this.move = true;
+      }
+    }
+
+
   showTags(tags) {
     if (tags.length > 0) {
       this.showalltags = true;
@@ -100,10 +137,6 @@ export class ViewpostComponent implements OnInit {
     else {
       this.showalltags = false
     }
-  }
-  showMenu() {
-    document.getElementById('burger').classList.toggle("is-active")
-    document.getElementById('navbarBasicExample').classList.toggle('is-active')
   }
 
   toggleComment() {
