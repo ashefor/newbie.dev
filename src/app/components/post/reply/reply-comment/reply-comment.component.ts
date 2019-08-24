@@ -1,5 +1,7 @@
 import { Component, OnInit, Output, EventEmitter } from '@angular/core';
 import * as BalloonEditor from '@ckeditor/ckeditor5-build-balloon';
+import { FormGroup, FormBuilder } from '@angular/forms';
+import { IReplies } from 'src/app/model/post.model';
 
 @Component({
   selector: 'app-reply-comment',
@@ -8,11 +10,26 @@ import * as BalloonEditor from '@ckeditor/ckeditor5-build-balloon';
 })
 export class ReplyCommentComponent implements OnInit {
   public Editor = BalloonEditor;
-  @Output() addNewReply = new EventEmitter()
+  @Output() replyComment = new EventEmitter()
+  @Output() cancelAddReply = new EventEmitter()
+  replyCommentForm: FormGroup;
 
-  constructor() { }
+  constructor(private fb: FormBuilder) { }
 
   ngOnInit() {
+    this.replyCommentForm = this.fb.group({
+      text: ['']
+    })
   }
-
+  cancelReply() {
+    this.cancelAddReply.emit()
+  }
+  sendReply(formValue) {
+    let reply: IReplies = {
+      text: formValue.text,
+      date: new Date,
+    }
+    // console.log(formValue)
+    this.replyComment.emit(reply)
+  }
 }

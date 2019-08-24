@@ -159,7 +159,7 @@ export class ViewpostComponent implements OnInit {
     if (confirm(`Really delete ${post.title}?`)) {
       this.hs.deletePost(post._id).subscribe((data: any) => {
         if (data) {
-          this.router.navigate(['/home'])
+          this.router.navigate(['/posts'])
         }
         (error: any) => {
           console.log(error)
@@ -178,10 +178,10 @@ export class ViewpostComponent implements OnInit {
   }
 
   saveNewComment(comment: IComments){
-    // console.log(this.post)
     this.hs.createComment(this.post._id, comment.body).subscribe((data: any)=>{
       if(data){
-        this.post.comments.push(comment)
+        let lastObject: IComments = data.comments.pop()
+        this.post.comments.push(lastObject)
         this.addComment = false;
       }
     })

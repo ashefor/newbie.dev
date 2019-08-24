@@ -14,6 +14,7 @@ import { CommentsListComponent } from './comments-list/comments-list.component';
 import { CreateCommentComponent } from './create-comment/create-comment.component';
 import { RepliesListComponent } from './reply/replies-list/replies-list.component';
 import { ReplyCommentComponent } from './reply/reply-comment/reply-comment.component';
+import { EditCommentComponent } from './edit-comment/edit-comment.component';
 
 @NgModule({
   declarations: [
@@ -26,6 +27,7 @@ import { ReplyCommentComponent } from './reply/reply-comment/reply-comment.compo
     CreateCommentComponent,
     RepliesListComponent,
     ReplyCommentComponent,
+    EditCommentComponent,
   ],
   imports: [
     CommonModule,

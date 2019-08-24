@@ -1,4 +1,4 @@
-<div *ngFor="let reply of replies">
+<div *ngFor="let reply of replies.reverse()">
   <div class="card replies_card">
     <div class="card-content">
       <div class="media">
@@ -50,7 +50,7 @@
           </div>
         </div>
       </div>
-      <div *ngIf="reply._id === replyId" class="editreplyeditor">
+      <!-- <div *ngIf="reply._id === replyId" class="editreplyeditor">
         <ckeditor [editor]="Editor" [data]="replyBody" (change)="editedReply($event)">
 
         </ckeditor>
@@ -62,7 +62,8 @@
             Submit
           </a>
         </div>
-      </div>
+      </div> -->
     </div>
   </div>
+
 </div>

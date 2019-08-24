@@ -23,7 +23,7 @@
 
       </div>
       <div class="c_f">
-        <div class="level is-mobile" *ngIf="!newCommentId && !commentId">
+        <div class="level is-mobile" *ngIf="!index">
           <div class="level-left">
             <div class="level-item">
               <a (click)="likeComment(post._id, comment._id)">
@@ -54,6 +54,8 @@
           </div>
         </div>
       </div>
+      <app-reply-comment *ngIf="comment._id == index" (replyComment)="replyComment($event)" (cancelAddReply)="cancelAddReply()"></app-reply-comment>
+
 
       <!-- <div *ngIf="comment?._id === newCommentId">
         <ckeditor [editor]="Editor" (change)="replyData($event)">
@@ -83,6 +85,5 @@
       </div> -->
     </div>
   </div>
-  <app-reply-comment *ngIf="comment._id === index"></app-reply-comment>
   <app-replies-list [replies]="comment.replies"></app-replies-list>
 </div>

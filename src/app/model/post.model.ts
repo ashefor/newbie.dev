@@ -15,10 +15,10 @@ export interface IComments {
     id?: number,
     body: string;
     date?: Date;
-    replies?: IReplies;
+    replies?: IReplies[];
     likes?: Number;
 }
 export interface IReplies {
-    text: String,
+    text: string,
     date: Date
 }
