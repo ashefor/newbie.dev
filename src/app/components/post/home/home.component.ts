@@ -9,7 +9,7 @@ import { Component, OnInit } from '@angular/core';
 })
 export class HomeComponent implements OnInit {
   allposts = [];
-  posts: posts[];
+  posts: posts[]
   nodata;
   // wordsPerMinute =  200;
   result = [];
@@ -29,18 +29,10 @@ export class HomeComponent implements OnInit {
      }
     })
   }
-  showMenu() {
-    document.getElementById('burger').classList.toggle("is-active")
-    document.getElementById('navbarBasicExample').classList.toggle('is-active')
-  }
   readingTime(body) {
     const wordsPerMinute = 200;
     const noOfWords = body.split(/\s/g).length;
     const minutes = noOfWords / wordsPerMinute;
     this.result.push(Math.ceil(minutes));
-  }
-
-  showid(id){
-    // console.log(id)
   }
 }

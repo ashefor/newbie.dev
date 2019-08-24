@@ -1,6 +1,6 @@
 import { Component, OnInit, Output, EventEmitter } from '@angular/core';
 import * as BalloonEditor from '@ckeditor/ckeditor5-build-balloon';
-import { FormGroup, FormBuilder } from '@angular/forms';
+import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { IReplies } from 'src/app/model/post.model';
 
 @Component({
@@ -18,7 +18,7 @@ export class ReplyCommentComponent implements OnInit {
 
   ngOnInit() {
     this.replyCommentForm = this.fb.group({
-      text: ['']
+      text: ['', Validators.required]
     })
   }
   cancelReply() {

@@ -7,6 +7,7 @@ import * as BalloonEditor from '@ckeditor/ckeditor5-build-balloon';
 import { posts, IComments } from 'src/app/model/post.model';
 import { ChangeEvent } from '@ckeditor/ckeditor5-angular/ckeditor.component';
 import { Location } from '@angular/common';
+import { DataService } from 'src/app/services/data.service';
 
 
 
@@ -66,6 +67,7 @@ export class ViewpostComponent implements OnInit {
     private router: Router, 
     private fb: FormBuilder, 
     private location: Location,
+    private ds: DataService,
     public el: ElementRef<HTMLElement>) { }
     public innerWidth: any;
   
@@ -73,6 +75,7 @@ export class ViewpostComponent implements OnInit {
     this.commentForm = this.fb.group({
       body: ['']
     })
+    this.ds.newPostBody.subscribe(postdata => this.post = postdata)
     this.hs.viewOnePost(this.route.snapshot.params['id']).subscribe((res: any) => {
       if (res) {
         this.showpost = true;
@@ -81,7 +84,6 @@ export class ViewpostComponent implements OnInit {
         this.periods = res.body
         this.allcomments = res.comments
         this.allreplies = res.comments.replies
-        // console.log(this.allcomments)
         this.nooflikes = res.meta.likes;
         this.alltags = res.meta.tags
         this.readingTime(res.body)
@@ -159,20 +161,12 @@ export class ViewpostComponent implements OnInit {
     if (confirm(`Really delete ${post.title}?`)) {
       this.hs.deletePost(post._id).subscribe((data: any) => {
         if (data) {
+          console.log(data)
           this.router.navigate(['/posts'])
         }
         (error: any) => {
           console.log(error)
         }
-      })
-    }
-  }
-
-  deleteThisComment(post: posts, comment){
-    console.log(post._id, comment._id)
-    if(confirm('really delete this comment?')){
-      this.hs.deleteComment(post._id, comment._id).subscribe((resp: any)=>{
-        console.log(resp)
       })
     }
   }
@@ -187,58 +181,9 @@ export class ViewpostComponent implements OnInit {
     })
   }
 
-  editComment(comment_id){
-    if(!comment_id){
-      console.log('nothing')
-    }
-    console.log(comment_id)
-    this.hs.getSingleCommentForUpdate(this.post._id, comment_id).subscribe((data: any) => {
-      if (data) {
-        console.log(data)
-        this.commentId = data._id;
-        this.editorData = data.body;
-        this.newCommentId = null;
-      }
-    })
-  }
-  cancelComment(arg){
-    this.commentId = arg
-  }
-  cancelReply(arg){
-    this.newCommentId = arg
-  }
-  cancelEditReply(){
-    this.replyId = null;
-  }
-  updateComment(comment_id){
-    let comment;
-    if(this.editedcomemnt){
-      comment = this.editedcomemnt
-    }else{
-      comment = this.editorData
-    }
-    this.hs.updateThisComment(this.post._id, comment_id, comment).subscribe((data: any)=>{
-      console.log(data)
-      if(data){
-        // this.router.navigate([`/${this.post._id}`])
-        this.commentId = null;
-        this.cancelComment(this.commentId)
-        location.reload()
-      }
-    })
-  }
 
-  showReplyComment(comment_id){
-    this.donots =! this.donots
-    this.hs.getSingleCommentForUpdate(this.post._id, comment_id).subscribe((dataa: any) => {
-      if (dataa) {
-        console.log(dataa)
-        this.newCommentId = dataa._id;
-        this.editorData = dataa.body;
-        this.commentId = null;
-      }
-    })
-  }
+
+  
   sendReply(comment_id){
     const text = this.replyToComment
     this.hs.postReply(this.post._id, comment_id, text).subscribe((res: any)=>{

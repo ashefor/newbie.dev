@@ -2,6 +2,7 @@ import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { IComments, posts, IReplies } from 'src/app/model/post.model';
 import { PostService } from 'src/app/services/home.service';
 import { ActivatedRoute } from '@angular/router';
+import { DataService } from 'src/app/services/data.service';
 
 @Component({
   selector: 'app-comments-list',
@@ -9,59 +10,78 @@ import { ActivatedRoute } from '@angular/router';
   styleUrls: ['./comments-list.component.css']
 })
 export class CommentsListComponent implements OnInit {
-  @Input() comments:IComments[];
-  index;
+  @Input() comments: IComments[];
+  post: posts;
+  newCommentId;
   postId;
+  editCommentId;
   commentId;
-  constructor(private ps: PostService, private route: ActivatedRoute) { }
+  commentbody;
+  constructor(private ps: PostService,
+    private ds: DataService,
+    private route: ActivatedRoute) { }
 
   ngOnInit() {
-    console.log(this.comments);
-    this.index = null;
+    this.ds.currentMessage.subscribe(res => this.commentbody = res)
+    this.newCommentId = null;
     this.postId = this.route.snapshot.params['id']
-    console.log(this.postId)
   }
 
-  showReplyComment(comment_id){
+  showReplyComment(comment_id) {
     this.commentId = comment_id
-    this.index = this.comments.find(x => x.id = comment_id).id
-    // this.donots =! this.donots
-    // this.ps.getSingleCommentForUpdate(this.post._id, comment_id).subscribe((dataa: any) => {
-    //   if (dataa) {
-    //     console.log(dataa)
-    //     this.newCommentId = dataa._id;
-    //     this.editorData = dataa.body;
-    //     this.commentId = null;
-    //   }
-    // })
+    this.newCommentId = this.comments.find(x => x.id = comment_id).id
   }
 
-  editComment(comment_id){
-
+  showEditComment(comment_id) {
+    this.ps.getSingleCommentForUpdate(this.postId, comment_id).subscribe((data: any) => {
+      if (data) {
+        this.editCommentId = comment_id;
+        this.ds.sendMessage(data.body)
+      }
+    })
   }
-  cancelAddReply(){
-    this.index = null;
+
+  editComment(editedcomment: IComments) {
+    this.ps.updateThisComment(this.postId, this.editCommentId, editedcomment.body).subscribe((data: any) => {
+      if (data) {
+        this.ds.sendNewPost(data)
+        this.cancelEditComment()
+      }
+    })
+  }
+  cancelAddReply() {
+    this.newCommentId = null;
+  }
+  cancelEditComment() {
+    this.editCommentId = null;
   }
 
-  replyComment(reply: IReplies){
-    console.log(this.comments)
-    let replys = this.comments.find(x => x.body).replies
-    // replys.push(reply)
-    this.ps.postReply(this.postId, this.commentId,reply.text).subscribe((data: any)=>{
-      if(data){
-        console.log(data);
-        replys.push(reply);
-        // this.index = null;
+  replyComment(reply: IReplies) {
+    this.ps.postReply(this.postId, this.commentId, reply.text).subscribe((data: any) => {
+      if (data) {
+        console.log(data)
+        this.ds.sendNewPost(data)
         this.cancelAddReply()
       }
     })
   }
 
-  // sendReply(comment_id){
-  //   const text = this.replyToComment
-  //   this.hs.postReply(this.post._id, comment_id, text).subscribe((res: any)=>{
-  //     console.log(res)
-  //     window.location.reload();
-  //   })
-  // }
+  likeComment(comment_id){
+    console.log(this.postId, comment_id)
+    this.ps.likeThisComment(this.postId, comment_id).subscribe((data:any)=>{
+      if(data){
+        console.log(data)
+        this.ds.sendNewPost(data)
+      }
+    })
+  }
+
+  deleteThisComment(comment_id){
+    if(confirm('really delete this comment?')){
+      this.ps.deleteComment(this.postId, comment_id).subscribe((resp: any)=>{
+        console.log(resp)
+        this.ds.sendNewPost(resp)
+      })
+    }
+  }
 }

@@ -1,3 +1,17 @@
-<p>
-  edit-comment works!
-</p>
+<div>
+  <div class="field">
+    <form [formGroup]="editCommentForm">
+      <ckeditor [editor]="Editor" formControlName="text">
+
+      </ckeditor>
+      <div class="buttons">
+        <button class="button is-dark" (click)="cancelComment()">
+          cancel
+        </button>
+        <button class="button is-dark" (click)="updateComment(editCommentForm.value)" [disabled]="editCommentForm.invalid">
+          update
+        </button>
+      </div>
+    </form>
+  </div>
+</div>

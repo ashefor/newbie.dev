@@ -23,10 +23,10 @@
 
       </div>
       <div class="c_f">
-        <div class="level is-mobile" *ngIf="!index">
+        <div class="level is-mobile" *ngIf="!newCommentId">
           <div class="level-left">
             <div class="level-item">
-              <a (click)="likeComment(post._id, comment._id)">
+              <a (click)="likeComment(comment._id)">
                 <span class="icon">
                   <i class="fas fa-heart has-text-danger"></i>
                 </span>
@@ -36,13 +36,13 @@
           </div>
           <div class="level-right">
             <div class="level-item">
-              <a (click)="deleteThisComment(post, comment)" class="has-text-danger"
+              <a (click)="deleteThisComment(comment._id)" class="has-text-danger"
                 title="Delete comment">
                 <i class="fas fa-trash"></i>
               </a>
             </div>
             <div class="level-item">
-              <a (click)="editComment(comment._id)" class="has-text-primary" title="Edit comment">
+              <a (click)="showEditComment(comment._id)" class="has-text-primary" title="Edit comment">
                 <i class="fas fa-edit"></i>
               </a>
             </div>
@@ -54,7 +54,8 @@
           </div>
         </div>
       </div>
-      <app-reply-comment *ngIf="comment._id == index" (replyComment)="replyComment($event)" (cancelAddReply)="cancelAddReply()"></app-reply-comment>
+      <app-edit-comment *ngIf="comment._id == editCommentId" (editComment)="editComment($event)" (cancelEditComment)="cancelEditComment()"></app-edit-comment>
+      <app-reply-comment *ngIf="comment._id == newCommentId" (replyComment)="replyComment($event)" (cancelAddReply)="cancelAddReply()"></app-reply-comment>
 
 
       <!-- <div *ngIf="comment?._id === newCommentId">

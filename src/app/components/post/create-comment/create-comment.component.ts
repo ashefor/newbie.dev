@@ -1,5 +1,5 @@
 import { Component, OnInit, Output, EventEmitter } from '@angular/core';
-import { FormGroup, FormBuilder } from '@angular/forms';
+import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import * as BalloonEditor from '@ckeditor/ckeditor5-build-balloon';
 import { PostService } from 'src/app/services/home.service';
 import { IComments } from 'src/app/model/post.model';
@@ -19,7 +19,7 @@ export class CreateCommentComponent implements OnInit {
 
   ngOnInit() {
     this.commentForm = this.fb.group({
-      body: ['']
+      body: ['', Validators.required]
     })
   }
 
