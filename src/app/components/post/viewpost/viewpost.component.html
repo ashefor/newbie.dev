@@ -30,7 +30,7 @@
                 </div>
                 <div class="media-content">
                   <p class="title is-size-6 has-text-weight-normal">{{post.author}}</p>
-                  <p class="subtitle is-size-6 has-text-weight-normal">{{post.date | dateAgo }} . <span>{{result}} min
+                  <p class="subtitle is-size-6 has-text-weight-normal">{{post.date | timeAgo }} . <span>{{result}} min
                       read</span></p>
                 </div>
                 <div class="media-right">
@@ -81,7 +81,7 @@
                   Add a comment
                 </p>
               </a>
-              <app-create-comment *ngIf="addComment" (saveNewComment)="saveNewComment($event)"></app-create-comment>
+              <app-create-comment [postId]="post._id" *ngIf="addComment" (saveNewComment)="saveNewComment($event)"></app-create-comment>
             </div>
             <!-- <div *ngFor="let comment of post.comments.reverse(); let index = y" class="d_c">
 
@@ -266,7 +266,7 @@
             </div> -->
             <hr>
 
-            <app-comments-list [comments]="post.comments"></app-comments-list>
+            <app-comments-list [postId]="post._id" [comments]="post.comments"></app-comments-list>
           </div>
         </div>
       </div>

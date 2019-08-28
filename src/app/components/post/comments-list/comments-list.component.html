@@ -12,7 +12,7 @@
           <div class="content">
             <p class="has-text-weight-light is-size-6 c_a">{{comment.author? comment.author: 'Anonymous'}}
             </p>
-            <time datetime="" class="has-text-weight-light is-size-6">{{comment.date | dateAgo}}</time>
+            <time datetime="" class="has-text-weight-light is-size-6">{{comment.date | timeAgo}}</time>
           </div>
         </div>
         <div class="media-right">
@@ -23,7 +23,7 @@
 
       </div>
       <div class="c_f">
-        <div class="level is-mobile" *ngIf="!newCommentId">
+        <div class="level is-mobile" *ngIf="comment._id != editCommentId && comment._id != newCommentId">
           <div class="level-left">
             <div class="level-item">
               <a (click)="likeComment(comment._id)">
@@ -86,5 +86,5 @@
       </div> -->
     </div>
   </div>
-  <app-replies-list [replies]="comment.replies"></app-replies-list>
+  <app-replies-list [commentId]="comment._id" [postId]="postId" [replies]="comment.replies"></app-replies-list>
 </div>

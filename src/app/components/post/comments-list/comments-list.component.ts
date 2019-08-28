@@ -11,9 +11,9 @@ import { DataService } from 'src/app/services/data.service';
 })
 export class CommentsListComponent implements OnInit {
   @Input() comments: IComments[];
+  @Input() postId;
   post: posts;
   newCommentId;
-  postId;
   editCommentId;
   commentId;
   commentbody;
@@ -24,11 +24,9 @@ export class CommentsListComponent implements OnInit {
   ngOnInit() {
     this.ds.currentMessage.subscribe(res => this.commentbody = res)
     this.newCommentId = null;
-    this.postId = this.route.snapshot.params['id']
   }
 
   showReplyComment(comment_id) {
-    this.commentId = comment_id
     this.newCommentId = this.comments.find(x => x.id = comment_id).id
   }
 
@@ -57,7 +55,7 @@ export class CommentsListComponent implements OnInit {
   }
 
   replyComment(reply: IReplies) {
-    this.ps.postReply(this.postId, this.commentId, reply.text).subscribe((data: any) => {
+    this.ps.postReply(this.postId, this.newCommentId, reply.text).subscribe((data: any) => {
       if (data) {
         console.log(data)
         this.ds.sendNewPost(data)

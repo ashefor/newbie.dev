@@ -36,7 +36,6 @@ export class EditCommentComponent implements OnInit {
     let comment: IComments = {
       body: formValue.text
     }
-    console.log(formValue)
     this.editComment.emit(comment)
   }
 }

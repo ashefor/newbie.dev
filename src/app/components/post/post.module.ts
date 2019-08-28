@@ -8,13 +8,14 @@ import { HomeComponent } from './home/home.component';
 import { CreatComponent } from './create-post/creat.component';
 import { CKEditorModule } from '@ckeditor/ckeditor5-angular';
 import { ReactiveFormsModule } from '@angular/forms';
-import { DateAgoPipe } from 'src/app/pipes/date-ago.pipe';
 import { SharedModule } from '../shared/shared.module';
 import { CommentsListComponent } from './comments-list/comments-list.component';
 import { CreateCommentComponent } from './create-comment/create-comment.component';
 import { RepliesListComponent } from './reply/replies-list/replies-list.component';
 import { ReplyCommentComponent } from './reply/reply-comment/reply-comment.component';
 import { EditCommentComponent } from './edit-comment/edit-comment.component';
+import { TimeAgoPipe } from 'src/app/pipes/timeago.pipe';
+import { EditReplyComponent } from './reply/edit-reply/edit-reply.component';
 
 @NgModule({
   declarations: [
@@ -22,12 +23,13 @@ import { EditCommentComponent } from './edit-comment/edit-comment.component';
     CreatComponent,
     HomeComponent,
     ViewpostComponent,
-    DateAgoPipe,
+    TimeAgoPipe,
     CommentsListComponent,
     CreateCommentComponent,
     RepliesListComponent,
     ReplyCommentComponent,
     EditCommentComponent,
+    EditReplyComponent,
   ],
   imports: [
     CommonModule,

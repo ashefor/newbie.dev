@@ -8,10 +8,12 @@ import { posts } from '../model/post.model';
 export class DataService {
   post: posts;
   private msgFromServer = new BehaviorSubject('');
-  private postBody = new BehaviorSubject(this.post)
+  private postBody = new BehaviorSubject(this.post);
+  private commentReplyData = new BehaviorSubject('')
 
   currentMessage = this.msgFromServer.asObservable()
   newPostBody = this.postBody.asObservable()
+  newCommentReplyData = this.commentReplyData.asObservable()
   constructor() { }
 
   sendMessage(data: any){
@@ -20,5 +22,9 @@ export class DataService {
 
   sendNewPost(poste: posts){
     this.postBody.next(poste)
+  }
+
+  sendCommentReplyData(data: any){
+    this.commentReplyData.next(data)
   }
 }

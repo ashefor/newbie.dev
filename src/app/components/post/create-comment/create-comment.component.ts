@@ -1,4 +1,4 @@
-import { Component, OnInit, Output, EventEmitter } from '@angular/core';
+import { Component, OnInit, Output, EventEmitter, Input } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import * as BalloonEditor from '@ckeditor/ckeditor5-build-balloon';
 import { PostService } from 'src/app/services/home.service';
@@ -14,6 +14,7 @@ export class CreateCommentComponent implements OnInit {
   public Editor = BalloonEditor;
   commentForm: FormGroup;
   @Output() saveNewComment = new EventEmitter() 
+  @Input() postId;
 
   constructor(private fb: FormBuilder, private ps: PostService) { }
 

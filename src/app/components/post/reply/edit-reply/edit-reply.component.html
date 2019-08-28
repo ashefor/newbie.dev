@@ -1,0 +1,17 @@
+<div>
+  <div class="field">
+    <form [formGroup]="editReplyForm">
+     <ckeditor [editor]="Editor" [data]="replyBody" formControlName="text">
+   
+     </ckeditor>
+     <div class="buttons">
+       <a class="button is-dark" (click)="cancel()">
+         cancel
+       </a>
+       <a class="button is-dark" (click)="submitEditedReply(editReplyForm.value)">
+         Submit
+       </a>
+     </div>
+    </form>
+   </div>
+</div>

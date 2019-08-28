@@ -76,20 +76,23 @@ export class ViewpostComponent implements OnInit {
       body: ['']
     })
     this.ds.newPostBody.subscribe(postdata => this.post = postdata)
-    this.hs.viewOnePost(this.route.snapshot.params['id']).subscribe((res: any) => {
-      if (res) {
-        this.showpost = true;
-        this.post = res;
-        console.log(this.post)
-        this.periods = res.body
-        this.allcomments = res.comments
-        this.allreplies = res.comments.replies
-        this.nooflikes = res.meta.likes;
-        this.alltags = res.meta.tags
-        this.readingTime(res.body)
-        this.showTags(res.meta.tags)
-      }
+    this.route.params.subscribe((params: Params)=>{
+      this.hs.viewOnePost(params.id).subscribe((res: any) => {
+        if (res) {
+          this.showpost = true;
+          this.post = res;
+          console.log(this.post)
+          this.periods = res.body
+          this.allcomments = res.comments
+          this.allreplies = res.comments.replies
+          this.nooflikes = res.meta.likes;
+          this.alltags = res.meta.tags
+          this.readingTime(res.body)
+          this.showTags(res.meta.tags)
+        }
+      })
     })
+    
   }
 
   @HostListener('window:scroll', ['$event'])

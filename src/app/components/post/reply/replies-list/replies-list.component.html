@@ -12,7 +12,7 @@
           <div class="content">
             <p class="has-text-weight-light is-size-6 c_a">{{reply.author? reply.author: 'Anonymous'}}
             </p>
-            <time datetime="" class="has-text-weight-light is-size-6">{{reply.date | dateAgo}}</time>
+            <time datetime="" class="has-text-weight-light is-size-6">{{reply.date | timeAgo}}</time>
           </div>
         </div>
         <div class="media-right">
@@ -23,7 +23,7 @@
 
       </div>
       <div class="">
-        <div class="level is-mobile" *ngIf="!replyId">
+        <div class="level is-mobile" *ngIf="reply._id !== replyToEditId">
           <div class="level-left">
             <div class="level-item">
               <a>
@@ -36,33 +36,21 @@
           </div>
           <div class="level-right">
             <div class="level-item">
-              <a (click)="deleteThisReply(post, comment, reply)" class="has-text-danger"
+              <a (click)="deleteThisReply(reply._id)" class="has-text-danger"
                 title="Delete reply">
                 <i class="fas fa-trash"></i>
               </a>
             </div>
             <div class="level-item">
-              <a (click)="editThisReply(comment._id, reply._id)" class="has-text-primary"
+              <a (click)="showEditThisReply(reply._id)" class="has-text-primary"
                 title="Edit reply">
                 <i class="fas fa-edit"></i>
               </a>
             </div>
           </div>
         </div>
-      </div>
-      <!-- <div *ngIf="reply._id === replyId" class="editreplyeditor">
-        <ckeditor [editor]="Editor" [data]="replyBody" (change)="editedReply($event)">
-
-        </ckeditor>
-        <div class="buttons">
-          <a class="button is-dark" (click)="cancelEditReply()">
-            cancel
-          </a>
-          <a class="button is-dark" (click)="submitEditedReply(comment._id, reply._id)">
-            Submit
-          </a>
-        </div>
-      </div> -->
+      </div>   
+       <app-edit-reply *ngIf="reply._id == replyToEditId" (cancelEditThisReply)="cancelEditThisReply()"  (editThisReply)="editThisReply($event)" ></app-edit-reply>
     </div>
   </div>
 

@@ -20,5 +20,5 @@ export interface IComments {
 }
 export interface IReplies {
     text: string,
-    date: Date
+    date?: Date
 }

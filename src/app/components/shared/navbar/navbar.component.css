@@ -21,6 +21,7 @@ nav{
 } */
 .cre{
     width: 100%;
+    display: flex;
     max-width: 1000px;
     margin-left: auto;
     margin-right: auto;
