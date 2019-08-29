@@ -11,7 +11,7 @@
         </div>
       </div>
       <div class="column">
-        <div class="card mt2" *ngFor="let post of posts; let i = index;">
+        <div class="card mt2" *ngFor="let post of posts.reverse(); let i = index;">
           <div class="card-content">
             <div class="media">
               <div class="media-left">
@@ -43,7 +43,12 @@
                 {{tags}}
               </span>
             </div>
-            <div class="show" #postBody [innerHTML]="post.body">
+            <a [routerLink]="['/posts', post._id]" class="link">
+              <div [innerHTML]="newpostbod[i]">
+
+              </div>
+            </a>
+            <div class="show" #postBody [innerHTML]="post.body" hidden>
               {{post.body}}
             </div>
             <footer class="c_f">
@@ -64,11 +69,11 @@
 
                 </div>
                 <div class="level-right">
-                    <div class="level-item">
-                        <a class="actionBtn">
-                          <img src="../../../../assets/bookmark-white.png" alt="">
-                        </a>
-                      </div>
+                  <div class="level-item">
+                    <a class="actionBtn">
+                      <img src="../../../../assets/bookmark-white.png" alt="">
+                    </a>
+                  </div>
                   <div class="level-item">
                     <a class="actionBtn">
                       <img src="../../../../assets/share.png" alt="">

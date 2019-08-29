@@ -16,7 +16,7 @@ export class HomeComponent implements OnInit, AfterViewInit {
   showTags = false;
   alltags = [];
   @ViewChildren('postBody') postBodyy: QueryList<any>
-  // @ViewChild('postBody') postBodyy: ElementRef
+  newpostbod = []
   constructor(private hs: PostService) { }
 
   ngOnInit() {
@@ -32,9 +32,7 @@ export class HomeComponent implements OnInit, AfterViewInit {
     })
   }
   ngAfterViewInit() {
-    setTimeout(() => {
-      this.viewBody('...')
-    }, 1000);
+    this.viewBody('...')
   }
   viewBody(after) {
     this.postBodyy.forEach(body => {
@@ -42,13 +40,16 @@ export class HomeComponent implements OnInit, AfterViewInit {
       let content = body.nativeElement.innerHTML.trim()
       content = content.split(' ')
       if (content.length <= limit) {
+        this.newpostbod.push(body.nativeElement.innerHTML)
         return content
       } else {
         content = content.slice(0, limit);
         content = content.join(' ') + (after ? after : '');
       }
       body.nativeElement.innerHTML = content;
+      this.newpostbod.push(body.nativeElement.innerHTML)
     })
+    console.log(this.newpostbod)
   }
   readingTime(body) {
     const wordsPerMinute = 200;

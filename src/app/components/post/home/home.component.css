@@ -9,6 +9,9 @@ a{
 a:hover{
     color: #3273dc
 }
+a:hover div{
+    color: black
+}
 nav{
     /* max-width: 1000px; */
     margin-left: auto;
