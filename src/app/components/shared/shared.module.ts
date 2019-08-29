@@ -2,6 +2,8 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { NavbarComponent } from './navbar/navbar.component';
 import { RouterModule } from '@angular/router';
+// import { DropDownDirective } from './dropdown.directive';
+import { DropDownDirective } from './drop-down.directive';
 
 @NgModule({
   imports: [
@@ -9,7 +11,9 @@ import { RouterModule } from '@angular/router';
     RouterModule
   ],
   declarations: [
-    NavbarComponent
+    NavbarComponent,
+    DropDownDirective,
+    // DropDownDirective
   ],
   exports: [
     NavbarComponent

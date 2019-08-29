@@ -70,6 +70,8 @@ export class ViewpostComponent implements OnInit {
     private ds: DataService,
     public el: ElementRef<HTMLElement>) { }
     public innerWidth: any;
+    hasLikedThis;
+    hasLikedThis2;
   
   ngOnInit() {
     this.commentForm = this.fb.group({
@@ -95,23 +97,23 @@ export class ViewpostComponent implements OnInit {
     
   }
 
-  @HostListener('window:scroll', ['$event'])
-    handleScroll(){
-      // const newpos = this.el.nativeElement.scrollTop
-      // const h = this.postDetails.nativeElement.offsetTop
-      // const t = this.postDetails.nativeElement.clientHeight
-      const th = this.postDetails.nativeElement.scrollHeight
-      // console.log(h,t,th)
-      const scrollpos = window.pageYOffset;
-      // console.log(scrollpos)
-      // }
-      if(scrollpos >= th){
-          this.move = false
-      }
-      else{
-        this.move = true;
-      }
-    }
+  // @HostListener('window:scroll', ['$event'])
+  //   handleScroll(){
+  //     // const newpos = this.el.nativeElement.scrollTop
+  //     // const h = this.postDetails.nativeElement.offsetTop
+  //     // const t = this.postDetails.nativeElement.clientHeight
+  //     const th = this.postDetails.nativeElement.scrollHeight
+  //     // console.log(h,t,th)
+  //     const scrollpos = window.pageYOffset;
+  //     // console.log(scrollpos)
+  //     // }
+  //     if(scrollpos >= th){
+  //         this.move = false
+  //     }
+  //     else{
+  //       this.move = true;
+  //     }
+  //   }
 
 
   showTags(tags) {
@@ -134,9 +136,13 @@ export class ViewpostComponent implements OnInit {
     this.result = Math.ceil(minutes)
   }
 
+  
+  
   likePost(id) {
     if (!this.hasLiked) {
       this.hasLiked = true;
+      this.hasLikedThis = `rgba(33,150,243,.4)`;
+      this.hasLikedThis2 = `rgba(33,150,243,.1)`;
       this.nooflikes += 1
       this.hs.likeThisPost(id).subscribe((data: any) => {
         alert('liked successfully')
@@ -151,6 +157,7 @@ export class ViewpostComponent implements OnInit {
     //   })
     // }
   }
+
   likeComment(post_id, comment_id){
     console.log(post_id, comment_id)
     this.hs.likeThisComment(post_id, comment_id).subscribe((data:any)=>{

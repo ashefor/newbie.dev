@@ -1,3 +1,10 @@
-.s_c, .d_c{
-    margin-top: 20px
+.media-content{
+    margin: auto
+}
+p{
+    margin-bottom: 0 !important
+}
+.actionBtn img{
+    width: 20px;
+    height: 20px;
 }

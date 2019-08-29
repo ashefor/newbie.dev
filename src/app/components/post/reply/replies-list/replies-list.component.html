@@ -1,5 +1,5 @@
 <div *ngFor="let reply of replies.reverse()">
-  <div class="card replies_card">
+  <div class="card mt1 w90 replyCard">
     <div class="card-content">
       <div class="media">
         <div class="media-left">
@@ -25,26 +25,24 @@
       <div class="">
         <div class="level is-mobile" *ngIf="reply._id !== replyToEditId">
           <div class="level-left">
-            <div class="level-item">
-              <a>
-                <span class="icon">
-                  <i class="fas fa-heart has-text-danger"></i>
-                </span>
+            <!-- <div class="level-item">
+              <a class="button is-rounded like_btn">
+                  <img src="../../../../assets/thumbs.png" alt="" srcset="">
                 <span>0</span>
               </a>
-            </div>
+            </div> -->
           </div>
           <div class="level-right">
             <div class="level-item">
-              <a (click)="deleteThisReply(reply._id)" class="has-text-danger"
+              <a (click)="deleteThisReply(reply._id)" class="actionBtn"
                 title="Delete reply">
-                <i class="fas fa-trash"></i>
+                <img src="../../../../assets/bin.png" alt="delete">
               </a>
             </div>
             <div class="level-item">
-              <a (click)="showEditThisReply(reply._id)" class="has-text-primary"
+              <a (click)="showEditThisReply(reply._id)" class="actionBtn"
                 title="Edit reply">
-                <i class="fas fa-edit"></i>
+                <img src="../../../../assets/edit.png" alt="reply">
               </a>
             </div>
           </div>

@@ -2,281 +2,112 @@
 <div class="section">
   <div class="post_wrapper">
     <div class="" *ngIf="showpost">
-      <div class="columns">
-        <div class="column is-narrow is-hidden-touch has-text-centered leftBar">
-          <div class="left_side_info" #leftSide *ngIf="move">
-            <figure class="image is-128x128 has-text-centered" style="margin: auto">
-              <img src="https://bulma.io/images/placeholders/128x128.png" alt="Placeholder image" class="is-rounded">
-            </figure>
-            <a [routerLink]="[]" routerLinkActive="router-link-active">
-              <p class="is-size-3 has-text-weight-bold">{{post.author}}</p>
-            </a>
-            <div class="field">
-              <button class="button is-outlined is-info">
-                Follow
-              </button>
-            </div>
-          </div>
-        </div>
-        <div class="column postBody">
-          <div class="">
-            <div class="field p_a">
-              <div class="media">
-                <div class="media-left">
-                  <figure class="image is-48x48">
-                    <img src="https://bulma.io/images/placeholders/48x48.png" alt="Placeholder image"
-                      class="is-rounded">
-                  </figure>
-                </div>
-                <div class="media-content">
-                  <p class="title is-size-6 has-text-weight-normal">{{post.author}}</p>
-                  <p class="subtitle is-size-6 has-text-weight-normal">{{post.date | timeAgo }} . <span>{{result}} min
-                      read</span></p>
-                </div>
-                <div class="media-right">
-                  <div class="buttons">
-                    <a class="button is-primary is-outlined" title="Edit" [routerLink]="['/posts', post._id, 'edit']">
-                      <i class="fas fa-edit"></i>
-                    </a>
-                    <a class="button is-danger is-outlined" (click)="deleteThisPost(post)">
-                      <i class="fas fa-trash"></i>
-                    </a>
-                  </div>
+      <div class="">
+        <div class="postCard">
+          <div class="field p_a">
+            <div class="media">
+              <div class="media-left">
+                <figure class="image is-48x48">
+                  <img src="https://bulma.io/images/placeholders/48x48.png" alt="Placeholder image" class="is-rounded">
+                </figure>
+              </div>
+              <div class="media-content author-name-time is-flex-desktop">
+                <p class="title is-size-6 has-text-weight-normal">{{post.author}}</p>
+                <p>·</p>
+                <p class="subtitle is-size-6 has-text-weight-normal" title="{{post.date | date}}">
+                  {{post.date | timeAgo }}</p>
+                <p>·</p>
+                <p class="subtitle is-size-6 has-text-weight-normal">{{result}} min read </p>
+              </div>
+              <div class="media-right">
+                <div class="edit_del_btns">
+                  <a class="actionBtn edit_icon" title="Edit" [routerLink]="['/posts', post._id, 'edit']">
+                    <img src="../../../../assets/edit.png" alt="edit">
+                  </a>
+                  <a class="actionBtn" (click)="deleteThisPost(post)" title="Delete">
+                    <img src="../../../../assets/trash.png" alt="delete">
+                  </a>
                 </div>
               </div>
             </div>
-            <div class="field p_t">
-              <p class="title is-size-2 has-text-weight-normal">
-                {{post.title}}
-              </p>
-              <div class="tags">
-                <span class="tag" *ngFor="let tags of alltags">
-                  {{tags}}
+          </div>
+          <div class="field p_t">
+            <p class="title is-size-2 has-text-weight-normal">
+              {{post.title}}
+            </p>
+            <div class="tags">
+              <span class="tag" *ngFor="let tags of alltags">
+                {{tags}}
+              </span>
+            </div>
+          </div>
+          <div class="body-text content">
+            <div class="content texttrunc is-size-5 has-text-justified" [innerHTML]="post.body" #postBody>
+            </div>
+            <div class="field has-text-left-mobile has-text-right">
+              <a class="button is-rounded like_btn" (click)="likePost(post._id)" [style.border-color]="hasLikedThis"
+                [style.background]="hasLikedThis2">
+                <div class="image is-small">
+                  <img src="../../../../assets/thumbs.png" alt="like post" srcset="">
+                </div>
+                <span *ngIf="nooflikes !== 0">
+                  {{nooflikes}}
                 </span>
-              </div>
-            </div>
-            <div class="body-text content">
-              <div class="content texttrunc is-size-5 has-text-justified" [innerHTML]="post.body" #postBody>
-                <!-- {{post.body}} -->
-              </div>
-              <div class="field has-text-left-mobile has-text-right lp">
-                <a class="icon is-size-4" (click)="likePost(post._id)">
-                  <span>
-                    <i class="fas fa-heart has-text-link" *ngIf="!hasLiked"></i>
-                    <i class="fas fa-heart has-text-danger" *ngIf="hasLiked"></i>
-                  </span>
-                  <span>
-                    {{nooflikes}}
-                  </span>
-                </a>
-              </div>
-              <hr>
-            </div>
-            <div class="">
-              <a class="button is-primary is-outlined is-fullwidth is-medium" (click)="toggleComment()">
-                <p *ngIf="addComment">
-                  I change my mind
-                </p>
-                <p *ngIf="!addComment">
-                  Add a comment
-                </p>
               </a>
-              <app-create-comment [postId]="post._id" *ngIf="addComment" (saveNewComment)="saveNewComment($event)"></app-create-comment>
             </div>
-            <!-- <div *ngFor="let comment of post.comments.reverse(); let index = y" class="d_c">
-
-              <div *ngIf="comment == null; else showOtherComment">
-                <div class="card s_c">
-                  <div class="card-content">
-                    <div class="control">
-                      <input class="input" type="text" placeholder="comment unavailable" disabled>
-                    </div>
-                  </div>
-                </div>
-              </div>
-              <ng-template #showOtherComment>
-                <div class="card s_c">
-                  <div class="card-content">
-                    <div class="media">
-                      <div class="media-left">
-                        <figure class="image is-32x32">
-                          <img src="https://bulma.io/images/placeholders/96x96.png" alt="Placeholder image"
-                            class="is-rounded">
-                        </figure>
-                      </div>
-                      <div class="media-content">
-                        <div class="content">
-                          <p class="has-text-weight-light is-size-6 c_a">{{comment.author? comment.author: 'Anonymous'}}
-                          </p>
-                          <time datetime="" class="has-text-weight-light is-size-6">{{comment.date | dateAgo}}</time>
-                        </div>
-                      </div>
-                      <div class="media-right">
-                        <i class="fa fa-ellipsis-v"></i>
-                      </div>
-                    </div>
-                    <div class="content" [innerHTML]="comment.body">
-
-                    </div>
-                    <div class="c_f">
-                      <div class="level is-mobile" *ngIf="!newCommentId && !commentId">
-                        <div class="level-left">
-                          <div class="level-item">
-                            <a (click)="likeComment(post._id, comment._id)">
-                              <span class="icon">
-                                <i class="fas fa-heart has-text-danger"></i>
-                              </span>
-                              <span>{{comment.likes}}</span>
-                            </a>
-                          </div>
-                        </div>
-                        <div class="level-right">
-                          <div class="level-item">
-                            <a (click)="deleteThisComment(post, comment)" class="has-text-danger"
-                              title="Delete comment">
-                              <i class="fas fa-trash"></i>
-                            </a>
-                          </div>
-                          <div class="level-item">
-                            <a (click)="editComment(comment._id)" class="has-text-primary" title="Edit comment">
-                              <i class="fas fa-edit"></i>
-                            </a>
-                          </div>
-                          <div class="level-item">
-                            <a (click)="showReplyComment(comment._id)" class="has-text-info" title="Reply comment">
-                              <i class="fas fa-reply"></i>
-                            </a>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-
-                    <div *ngIf="comment?._id === newCommentId">
-                      <ckeditor [editor]="Editor" (change)="replyData($event)">
-
-                      </ckeditor>
-                      <div class="buttons">
-                        <a class="button is-dark" (click)="cancelReply()">
-                          cancel
-                        </a>
-                        <a class="button is-dark" (click)="sendReply(comment._id)">
-                          Submit
-                        </a>
-                      </div>
-                    </div>
-                    <div *ngIf="comment?._id === commentId">
-                      <ckeditor [editor]="Editor" [data]="editorData" (change)="onChange($event)">
-
-                      </ckeditor>
-                      <div class="buttons">
-                        <a class="button is-dark" (click)="cancelComment()">
-                          cancel
-                        </a>
-                        <a class="button is-dark" (click)="updateComment(comment._id)">
-                          update
-                        </a>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </ng-template>
-
-
-
-              <div *ngFor="let reply of comment?.replies">
-                <div *ngIf="reply == null; else showThis">
-                  <div class="card replies_card">
-                    <div class="card-content">
-                      <div class="control">
-                        <input class="input" type="text" placeholder="reply unavailable" disabled>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-
-                <ng-template #showThis>
-                  <div class="card replies_card">
-                    <div class="card-content">
-                      <div class="media">
-                        <div class="media-left">
-                          <figure class="image is-32x32">
-                            <img src="https://bulma.io/images/placeholders/96x96.png" alt="Placeholder image"
-                              class="is-rounded">
-                          </figure>
-                        </div>
-                        <div class="media-content">
-                          <div class="content">
-                            <p class="has-text-weight-light is-size-6 c_a">{{reply.author? reply.author: 'Anonymous'}}
-                            </p>
-                            <time datetime="" class="has-text-weight-light is-size-6">{{reply.date | dateAgo}}</time>
-                          </div>
-                        </div>
-                        <div class="media-right">
-                          <i class="fa fa-ellipsis-v"></i>
-                        </div>
-                      </div>
-                      <div class="content" [innerHTML]="reply.text">
-
-                      </div>
-                      <div class="">
-                        <div class="level is-mobile" *ngIf="!replyId">
-                          <div class="level-left">
-                            <div class="level-item">
-                              <a>
-                                <span class="icon">
-                                  <i class="fas fa-heart has-text-danger"></i>
-                                </span>
-                                <span>0</span>
-                              </a>
-                            </div>
-                          </div>
-                          <div class="level-right">
-                            <div class="level-item">
-                              <a (click)="deleteThisReply(post, comment, reply)" class="has-text-danger"
-                                title="Delete reply">
-                                <i class="fas fa-trash"></i>
-                              </a>
-                            </div>
-                            <div class="level-item">
-                              <a (click)="editThisReply(comment._id, reply._id)" class="has-text-primary"
-                                title="Edit reply">
-                                <i class="fas fa-edit"></i>
-                              </a>
-                            </div>
-                          </div>
-                        </div>
-                      </div>
-                      <div *ngIf="reply._id === replyId" class="editreplyeditor">
-                        <ckeditor [editor]="Editor" [data]="replyBody" (change)="editedReply($event)">
-    
-                        </ckeditor>
-                        <div class="buttons">
-                          <a class="button is-dark" (click)="cancelEditReply()">
-                            cancel
-                          </a>
-                          <a class="button is-dark" (click)="submitEditedReply(comment._id, reply._id)">
-                            Submit
-                          </a>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </ng-template>
-              </div>
-            </div> -->
-            <hr>
-
-            <app-comments-list [postId]="post._id" [comments]="post.comments"></app-comments-list>
           </div>
         </div>
+        <div class="about_author">
+          <div class="media">
+            <figure class="media-left">
+              <p class="image is-128x128">
+                <img src="https://bulma.io/images/placeholders/128x128.png" class=" is-rounded">
+              </p>
+            </figure>
+            <div class="media-content">
+              <div class="content">
+                <h3 class=" is-size-4">
+                  <strong>John Smith</strong>
+                </h3>
+                <div class="author_content">
+                  <p>
+                    Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin ornare magna eros, eu pellentesque
+                    tortor vestibulum ut. Maecenas non massa sem. Etiam finibus odio quis feugiat facilisis.
+                    sectetur adipiscing elit. Proin ornare magna eros, eu pellentesque tortor vestibulum ut. Maecenas
+                    non massa sem. Etiam finibus odio quis feugiat facilisis.
+                  </p>
+                </div>
+              </div>
+              <div class="level is-mobile">
+                <div class="level-left">
+                  <a class="level-item">
+                    <button class="follow-btn">
+                      <span class="icon is-small"><i class="fas fa-user-plus"></i></span>
+                      <span>
+                        follow
+                      </span>
+                    </button>
+                  </a>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <hr>
+        <div class="">
+          <a class="button is-primary is-outlined is-fullwidth is-medium" (click)="toggleComment()">
+            <p *ngIf="addComment">
+              I change my mind
+            </p>
+            <p *ngIf="!addComment">
+              Add a comment
+            </p>
+          </a>
+          <app-create-comment [postId]="post._id" *ngIf="addComment" (saveNewComment)="saveNewComment($event)">
+          </app-create-comment>
+        </div>
+        <app-comments-list [postId]="post._id" [comments]="post.comments"></app-comments-list>
       </div>
     </div>
   </div>
 </div>
-<footer class="footer">
-  <div class="content has-text-centered">
-    <p>
-      Shredder et Ralty
-    </p>
-  </div>
-</footer>

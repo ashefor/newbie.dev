@@ -1,24 +1,54 @@
 <div *ngFor="let comment of comments.reverse()">
-  <div class="card s_c">
+  <div class="card mt2">
     <div class="card-content">
       <div class="media">
         <div class="media-left">
           <figure class="image is-32x32">
-            <img src="https://bulma.io/images/placeholders/96x96.png" alt="Placeholder image"
-              class="is-rounded">
+            <img src="https://bulma.io/images/placeholders/96x96.png" alt="Placeholder image" class="is-rounded">
           </figure>
         </div>
         <div class="media-content">
-          <div class="content">
+          <div class="content is-flex-desktop author-name-time">
             <p class="has-text-weight-light is-size-6 c_a">{{comment.author? comment.author: 'Anonymous'}}
             </p>
-            <time datetime="" class="has-text-weight-light is-size-6">{{comment.date | timeAgo}}</time>
+            <p>·</p>
+            <p datep="" class="has-text-weight-light is-size-6" title="{{comment.date | date}}">
+              {{comment.date | timeAgo}}</p>
           </div>
         </div>
         <div class="media-right">
-          <i class="fa fa-ellipsis-v"></i>
+          <!-- <i class="fa fa-ellipsis-v" (click)="toggleDropdown()"></i> -->
+          <div #dropdown class="dropdown is-right" [id]="comment._id">
+              <div class="dropdown-trigger">
+                <button class="button" aria-haspopup="true" aria-controls="dropdown-menu3" (click)="toggleDropdown(comment._id)">
+                    <i class="fa fa-ellipsis-v"></i>
+                </button>
+              </div>
+              <div *ngIf="comment._id == testId" class="dropdown-menu" role="menu">
+                <div class="dropdown-content">
+                  <a href="#" class="dropdown-item">
+                    Overview
+                  </a>
+                  <a href="#" class="dropdown-item">
+                    Modifiers
+                  </a>
+              
+                  <hr class="dropdown-divider">
+                  <a href="#" class="dropdown-item">
+                    More
+                  </a>
+                </div>
+              </div>
+            </div>
         </div>
       </div>
+
+      
+      
+
+
+
+
       <div class="content" [innerHTML]="comment.body">
 
       </div>
@@ -26,64 +56,36 @@
         <div class="level is-mobile" *ngIf="comment._id != editCommentId && comment._id != newCommentId">
           <div class="level-left">
             <div class="level-item">
-              <a (click)="likeComment(comment._id)">
-                <span class="icon">
-                  <i class="fas fa-heart has-text-danger"></i>
-                </span>
-                <span>{{comment.likes}}</span>
+              <a class="button is-rounded like_btn" (click)="likeComment(comment._id)"
+                [style.border-color]="hasLikedThis" [style.background]="hasLikedThis2">
+                  <img src="../../../../assets/thumbs.png" alt="" srcset="">
+                <span *ngIf="comment.likes !== 0">{{comment.likes}}</span>
               </a>
             </div>
           </div>
           <div class="level-right">
             <div class="level-item">
-              <a (click)="deleteThisComment(comment._id)" class="has-text-danger"
-                title="Delete comment">
-                <i class="fas fa-trash"></i>
+              <a (click)="deleteThisComment(comment._id)" class="actionBtn" title="Delete comment">
+                <img src="../../../../assets/bin.png" alt="delete">
               </a>
             </div>
             <div class="level-item">
-              <a (click)="showEditComment(comment._id)" class="has-text-primary" title="Edit comment">
-                <i class="fas fa-edit"></i>
+              <a (click)="showEditComment(comment._id)" class="actionBtn" title="Edit comment">
+                <img src="../../../../assets/edit.png" alt="edit">
               </a>
             </div>
             <div class="level-item">
-              <a (click)="showReplyComment(comment._id)" class="has-text-info" title="Reply comment">
-                <i class="fas fa-reply"></i>
+              <a (click)="showReplyComment(comment._id)" class="actionBtn" title="Reply comment">
+                <img src="../../../../assets/reply.png" alt="reply">
               </a>
             </div>
           </div>
         </div>
       </div>
-      <app-edit-comment *ngIf="comment._id == editCommentId" (editComment)="editComment($event)" (cancelEditComment)="cancelEditComment()"></app-edit-comment>
-      <app-reply-comment *ngIf="comment._id == newCommentId" (replyComment)="replyComment($event)" (cancelAddReply)="cancelAddReply()"></app-reply-comment>
-
-
-      <!-- <div *ngIf="comment?._id === newCommentId">
-        <ckeditor [editor]="Editor" (change)="replyData($event)">
-
-        </ckeditor>
-        <div class="buttons">
-          <a class="button is-dark" (click)="cancelReply()">
-            cancel
-          </a>
-          <a class="button is-dark" (click)="sendReply(comment._id)">
-            Submit
-          </a>
-        </div>
-      </div> -->
-      <!-- <div *ngIf="comment?._id === commentId">
-        <ckeditor [editor]="Editor" [data]="editorData" (change)="onChange($event)">
-
-        </ckeditor>
-        <div class="buttons">
-          <a class="button is-dark" (click)="cancelComment()">
-            cancel
-          </a>
-          <a class="button is-dark" (click)="updateComment(comment._id)">
-            update
-          </a>
-        </div>
-      </div> -->
+      <app-edit-comment *ngIf="comment._id == editCommentId" (editComment)="editComment($event)"
+        (cancelEditComment)="cancelEditComment()"></app-edit-comment>
+      <app-reply-comment *ngIf="comment._id == newCommentId" (replyComment)="replyComment($event)"
+        (cancelAddReply)="cancelAddReply()"></app-reply-comment>
     </div>
   </div>
   <app-replies-list [commentId]="comment._id" [postId]="postId" [replies]="comment.replies"></app-replies-list>

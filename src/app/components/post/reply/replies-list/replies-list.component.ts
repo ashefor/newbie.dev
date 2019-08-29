@@ -2,6 +2,7 @@ import { Component, OnInit, Input } from '@angular/core';
 import { IReplies } from 'src/app/model/post.model';
 import { PostService } from 'src/app/services/home.service';
 import { DataService } from 'src/app/services/data.service';
+import { ToasterNotificationService } from 'src/app/services/toastr.service';
 
 @Component({
   selector: 'app-replies-list',
@@ -14,7 +15,9 @@ export class RepliesListComponent implements OnInit {
   @Input() postId;
   replyToEditId;
 
-  constructor(private ps: PostService, private ds: DataService) { }
+  constructor(private ps: PostService, 
+    private ds: DataService,
+    private toastr: ToasterNotificationService) { }
 
   ngOnInit() {
   }
@@ -40,6 +43,7 @@ export class RepliesListComponent implements OnInit {
     if(confirm('really delete this reply?')){
       this.ps.deleteReply(this.postId, this.commentId, reply_id).subscribe((resp: any)=>{
         console.log(resp)
+        this.toastr.successToastr('Reply deleted successfully')
         this.ds.sendNewPost(resp)
       })
     }

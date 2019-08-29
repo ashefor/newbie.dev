@@ -1,16 +1,13 @@
 nav{
-    /* max-width: 1000px;
+    max-width: 1200px;
     margin-left: auto;
     margin-right: auto;
-    box-shadow: 0 4px 12px 0 rgba(0, 0, 0, 0.05) */
-    background-color: #fff;
-    box-shadow: 0 4px 12px 0 rgba(0, 0, 0, 0.05);
-    height: 4rem;
-    width: 100%;
-    top: 0;
-    z-index: 500
+    /* box-shadow: 0 4px 12px 0 rgba(0, 0, 0, 0.05) */
+    /* background-color: #fff; */
+    /* box-shadow: 0 4px 12px 0 rgba(0, 0, 0, 0.05); */
+    /* height: 4rem; */
 }
-/* .navcontainer{
+.navcontainer{
     background-color: #fff;
     box-shadow: 0 4px 12px 0 rgba(0, 0, 0, 0.05);
     height: 4rem;
@@ -18,11 +15,14 @@ nav{
     position: fixed;
     top: 0;
     z-index: 500;
-} */
-.cre{
+}
+/* .cre{
     width: 100%;
     display: flex;
-    max-width: 1000px;
+    max-width: 1200px;
     margin-left: auto;
     margin-right: auto;
+} */
+.write_icon{
+    margin-right: 10px;
 }
