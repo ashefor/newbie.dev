@@ -1,3 +1,9 @@
 .replyCard{
     margin-left: auto;
 }
+.card{
+    background: #f8f8f8
+}
+.card-content{
+    padding: 3rem 6rem 2rem;
+}

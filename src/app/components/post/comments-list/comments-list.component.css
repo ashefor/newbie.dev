@@ -8,6 +8,14 @@ p{
     width: 20px;
     height: 20px;
 }
-/* hr{
-    height: 1px !important;
-} */
+.card-content{
+    padding: 3rem 6rem 2rem;
+}
+hr{
+    margin: 0;
+    color: black
+}
+.hasLiked{
+    border-color: rgba(33,150,243,.4);
+    background: rgba(33,150,243,.1)
+}
