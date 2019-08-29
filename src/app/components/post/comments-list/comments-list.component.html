@@ -18,29 +18,27 @@
         </div>
         <div class="media-right">
           <!-- <i class="fa fa-ellipsis-v" (click)="toggleDropdown()"></i> -->
-          <div #dropdown class="dropdown is-right" [id]="comment._id">
+          <div class="dropdown is-right is-hoverable">
               <div class="dropdown-trigger">
-                <button class="button" aria-haspopup="true" aria-controls="dropdown-menu3" (click)="toggleDropdown(comment._id)">
-                    <i class="fa fa-ellipsis-v"></i>
-                </button>
+                <a class="actionBtn" aria-haspopup="true" aria-controls="dropdown-menu3" (click)="toggleDropdown(comment._id)">
+                    <!-- <i class="fa fa-ellipsis-v"></i> -->
+                    <img src="../../../../assets/more.png" alt="">
+                </a>
               </div>
-              <div *ngIf="comment._id == testId" class="dropdown-menu" role="menu">
-                <div class="dropdown-content">
-                  <a href="#" class="dropdown-item">
-                    Overview
-                  </a>
-                  <a href="#" class="dropdown-item">
-                    Modifiers
-                  </a>
-              
-                  <hr class="dropdown-divider">
-                  <a href="#" class="dropdown-item">
-                    More
-                  </a>
-                </div>
+              <div >
+                  <div class="dropdown-menu" id="dropdown-menu3" role="menu">
+                      <div class="dropdown-content">
+                        <a href="#" class="dropdown-item">
+                          Overview
+                        </a>
+                        <a href="#" class="dropdown-item">
+                          Modifiers
+                        </a>
+                      </div>
+                    </div>
               </div>
             </div>
-        </div>
+          </div>
       </div>
 
       

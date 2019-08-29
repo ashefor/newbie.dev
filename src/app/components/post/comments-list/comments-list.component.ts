@@ -26,6 +26,7 @@ export class CommentsListComponent implements OnInit {
   testId;
   dropDownIds = [];
   open;
+  showDrop = false;
   constructor(private ps: PostService,
     private ds: DataService,
     private route: ActivatedRoute,
@@ -50,34 +51,21 @@ export class CommentsListComponent implements OnInit {
 
  }
   toggleDropdown(comment_id){
-    console.log(this.open)
     
-    // this.commentDropDownId = this.dropDownIds.find(val => val. = comment_id)
     this.testId = this.comments.find(val => val.id = comment_id).id
-    this.commentDropDownId = this.dropDown.find(ele =>
-     ele.nativeElement.attributes.id.nodeValue == comment_id)
+    this.showDrop = !this.showDrop
+    // this.commentDropDownId = this.dropDown.find(ele =>
+    //  ele.nativeElement.attributes.id.nodeValue == comment_id)
+    //  console.log(this.commentDropDownId)
     //  this.commentDropDownId.nativeElement.classList.toggle('is-active')
-    let part = this.commentDropDownId.nativeElement;
-    if(this.open = true){
-      this.render.setElementClass(part, 'is-active', this.open = true)
-    }else{
-      this.render.setElementClass(part, 'is-active', this.open = false)
-    }
-    // this.render.setElementClass(part, 'is-active', this.open = ! this.open)
-    console.log(this.commentDropDownId)
+    // let part = this.commentDropDownId.nativeElement;
+    // // this.render.cl
+    // if(comment_id == this.testId){
+    //   this.render.setElementClass(part, 'is-active', true)
+    // }
     // this.dropDown.forEach(value => {
     //   console.log((value.nativeElement.attributes.id.nodeValue))
     // })
-    if(this.commentDropDownId){
-      
-      // this.dropDown.nativeElement.forEach(element => {
-      //   // this.dropDown.nativeElement.classList.toggle('is-active')
-      //   element.classList.toggle('is-active')
-      // });
-      // this.dropDown.forEach(value => {
-      //   value.nativeElement.classList.toggle('is-active')
-      // })
-    }
     // this.dropDown.forEach(value => {
     //   // value.nativeElement.classList.toggle('is-active')
     //   if(this.commentDropDownId){

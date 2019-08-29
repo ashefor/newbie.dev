@@ -34,7 +34,21 @@
     height: 20px;
 }
 .actionBtn:hover{
-    background: #f7f9fa;
+    background: #ebecf1;
+    border-color: #dedede;
+    /* background: #ebecf1;
+    opacity: 1;
+    border-color: #dedede;
+    padding: .25rem .5rem;
+    border: 1px solid transparent;
+    border-radius: 1000px;
+    cursor: pointer;
+    line-height: 1;
+    outline: 0;
+    opacity: .8; */
+}
+.dropdown-divider{
+    height: 1px !important;
 }
 .card{
     border-radius: 10px
