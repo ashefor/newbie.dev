@@ -10,8 +10,12 @@
           narrow guy
         </div>
       </div>
+      
+      
       <div class="column">
-        <div class="card mt2" *ngFor="let post of posts.reverse(); let i = index;">
+        <div class="card mt2" *ngFor="let post of posts; let i = index;">
+            <input type="text" value="{{post.body}}" name="" id="">
+            <ckeditor disabled="true" [editor]="Editor" [data]="post.body"></ckeditor>
           <div class="card-content">
             <div class="media">
               <div class="media-left">
@@ -43,12 +47,12 @@
                 {{tags}}
               </span>
             </div>
-            <a [routerLink]="['/posts', post._id]" class="link">
+            <!-- <a [routerLink]="['/posts', post._id]" class="link">
               <div [innerHTML]="newpostbod[i]">
 
               </div>
-            </a>
-            <div class="show" #postBody [innerHTML]="post.body" hidden>
+            </a> -->
+            <div class="show" #postBody [innerHTML]="post.body">
               {{post.body}}
             </div>
             <footer class="c_f">

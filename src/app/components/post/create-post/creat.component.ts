@@ -28,7 +28,7 @@ export class CreatComponent implements OnInit {
   public config: any = {
     placeholder: 'Description',
     //  plugins: [ Base64UploadAdapter ],
-    extraPlugins: [ this.MyCustomUploadAdapterPlugin ],
+    extraPlugins: [this.imagePluginFactory],
   }
   ngOnInit() {
     this.newPost = this.fb.group({
@@ -36,56 +36,36 @@ export class CreatComponent implements OnInit {
       body: ['', Validators.required],
       meta: this.fb.group({
         // tags: this.fb.array([this.selectedtags])
-        tags: [this.selectedtags]
+        tags: [this.selectedtags],
+        mediaIds: ['']
       })
     })
   }
 
 
-  // imagePluginFactory(editor) {
-  //   editor.plugins.get( 'FileRepository' ).createUploadAdapter = ( loader ) => {
-  //     return new CloudinaryImageUploadAdapter( loader, 'devnewbie', 'gji29xaj', 
-  //     [ 160, 500, 1000, 1052 ]);
+  imagePluginFactory(editor) {
+    editor.plugins.get( 'FileRepository' ).createUploadAdapter = ( loader ) => {
+      return new CloudinaryImageUploadAdapter( loader, 'devnewbie', 'gji29xaj', 
+      [ 160, 500, 1000, 1052 ]);
+    };
+  }
+
+  // MyCustomUploadAdapterPlugin(editor) {
+  //   editor.plugins.get('FileRepository').createUploadAdapter = (loader) => {
+  //     // Configure the URL to the upload script in your back-end here!
+  //     return new MyUploadAdapter(loader);
   //   };
   // }
-  
-  MyCustomUploadAdapterPlugin( editor ) {
-    editor.plugins.get( 'FileRepository' ).createUploadAdapter = ( loader ) => {
-        // Configure the URL to the upload script in your back-end here!
-        return new MyUploadAdapter( loader );
-    };
-}
 
-  showMenu() {
-    document.getElementById('burger').classList.toggle("is-active")
-    document.getElementById('navbarBasicExample').classList.toggle('is-active')
-  }
-  // autogrow(event) {
-  //   event.target.style.height = "auto";
-  //   if (event.target.scrollHeight <= 300) {
-  //     event.target.style.height = "300px"
-  //   } else {
-  //     event.target.style.height = event.target.scrollHeight + "px"
-  //   }
-  // }
-  // growAuthTitle(event) {
-  //   event.target.style.height = "auto";
-  //   if (event.target.scrollHeight <= 68) {
-  //     event.target.style.height = "60px"
-  //   } else {
-  //     event.target.style.height = event.target.scrollHeight + "px"
-  //   }
-  // }
-
-  addtag(event){
+  addtag(event) {
     const { target } = event;
     const id: any = (target as HTMLInputElement).getAttribute('data-value');
-    if((target as HTMLInputElement).checked){
+    if ((target as HTMLInputElement).checked) {
       // this.tags.push()
       this.selectedtags.push(id)
       this.newPost.patchValue(this.selectedtags.values)
       // console.log(this.selectedtags)
-    }else {
+    } else {
       const index = this.selectedtags.indexOf(id);
       if (index > -1) {
         this.selectedtags.splice(index, 1);
@@ -113,7 +93,7 @@ export class CreatComponent implements OnInit {
     // console.log(this.newPost.value)
     this.hs.createPost(this.newPost.value).subscribe((data: any) => {
       console.log(data)
-      if(data){
+      if (data) {
         this.router.navigate(['/posts'])
         this.loading = false
       }

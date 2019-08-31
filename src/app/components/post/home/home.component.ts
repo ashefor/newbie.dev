@@ -1,6 +1,7 @@
 import { posts } from '../../../model/post.model';
 import { PostService } from '../../../services/home.service';
 import { Component, OnInit, ViewChildren, ElementRef, QueryList, ViewChild, AfterViewInit } from '@angular/core';
+import * as BalloonEditor from '@ckeditor/ckeditor5-build-balloon';
 
 @Component({
   selector: 'app-home',
@@ -8,6 +9,7 @@ import { Component, OnInit, ViewChildren, ElementRef, QueryList, ViewChild, Afte
   styleUrls: ['./home.component.css']
 })
 export class HomeComponent implements OnInit, AfterViewInit {
+  public Editor = BalloonEditor
   allposts = [];
   posts: posts[]
   nodata;
@@ -32,7 +34,9 @@ export class HomeComponent implements OnInit, AfterViewInit {
     })
   }
   ngAfterViewInit() {
-    this.viewBody('...')
+    setTimeout(()=>{
+      this.viewBody('...')
+    }, 1000)
   }
   viewBody(after) {
     this.postBodyy.forEach(body => {

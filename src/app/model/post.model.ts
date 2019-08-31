@@ -4,10 +4,12 @@ export interface posts {
     body: string;
     author: string;
     date: Date;
-    comments: IComments[]
+    comments: IComments[];
+    media:any;
     meta: {
         likes: number;
-        tags: any
+        tags: any;
+        mediaIds: any;
     }
 
 }
@@ -21,4 +23,7 @@ export interface IComments {
 export interface IReplies {
     text: string,
     date?: Date
+}
+export interface IMedia {
+
 }
