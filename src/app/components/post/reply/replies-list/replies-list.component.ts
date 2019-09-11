@@ -21,10 +21,13 @@ export class RepliesListComponent implements OnInit {
 
   ngOnInit() {
   }
+
+
   showEditThisReply(reply_id){
     this.ps.getReplyForUpdate(this.postId, this.commentId, reply_id).subscribe((data: any)=>{
+      console.log(data)
       this.replyToEditId = data.reply._id;
-      this.ds.sendCommentReplyData(data.reply.text)
+      this.ds.sendCommentReplyData(data.reply.content)
     })
   }
   cancelEditThisReply(){
@@ -32,7 +35,7 @@ export class RepliesListComponent implements OnInit {
   }
 
   editThisReply(reply: IReplies){
-    this.ps.editReply(this.postId, this.commentId, this.replyToEditId, reply.text).subscribe((data: any)=>{
+    this.ps.editReply(this.postId, this.commentId, this.replyToEditId, reply.content).subscribe((data: any)=>{
       if(data){
         this.ds.sendNewPost(data)
       }

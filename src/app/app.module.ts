@@ -10,6 +10,7 @@ import { SharedModule } from './components/shared/shared.module';
 
 import { ToastrModule } from 'ngx-toastr';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations'
+import { Formatter } from './text-formatter';
 
 
 @NgModule({
@@ -26,6 +27,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations'
     BrowserAnimationsModule
   ],
   providers: [
+    Formatter
   ],
   bootstrap: [AppComponent]
 })

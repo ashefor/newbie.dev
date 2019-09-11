@@ -1,13 +1,13 @@
 export interface posts {
-    _id: number;
+    _id?: number;
     title: string;
-    body: string;
-    author: string;
-    date: Date;
-    comments: IComments[];
-    media:any;
+    content: string;
+    author?: string;
+    date?: Date;
+    comments?: IComments[];
+    media?:any;
     meta: {
-        likes: number;
+        likes?: number;
         tags: any;
         mediaIds: any;
     }
@@ -15,13 +15,13 @@ export interface posts {
 }
 export interface IComments {
     id?: number,
-    body: string;
+    content: string;
     date?: Date;
     replies?: IReplies[];
     likes?: Number;
 }
 export interface IReplies {
-    text: string,
+    content: string,
     date?: Date
 }
 export interface IMedia {

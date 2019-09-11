@@ -35,23 +35,23 @@ export class PostService {
   likeThisComment(post_id:number, comment_id: number){
     return this.http.put(`${this.postsURL}/${post_id}/comments/${comment_id}/likes`,{})
   }
-  createComment(id: number, body: string){
-    return this.http.post(`${this.postsURL}/${id}/comments`, {body})
+  createComment(id: number, content: string){
+    return this.http.post(`${this.postsURL}/${id}/comments`, {content})
   }
   getSingleCommentForUpdate(post_id: number, comment_id: number){
     return this.http.get(`${this.postsURL}/${post_id}/comments/${comment_id}`)
   }
-  updateThisComment(post_id: number, comment_id: number, comment: string){
-    return this.http.put(`${this.postsURL}/${post_id}/comments/${comment_id}`, {comment})
+  updateThisComment(post_id: number, comment_id: number, content: string){
+    return this.http.put(`${this.postsURL}/${post_id}/comments/${comment_id}`, {content})
   }
-  postReply(post_id: number, comment_id: number, text: string){
-    return this.http.post(`${this.postsURL}/${post_id}/comments/${comment_id}/replies`, {text})
+  postReply(post_id: number, comment_id: number, content: string){
+    return this.http.post(`${this.postsURL}/${post_id}/comments/${comment_id}/replies`, {content})
   }
   deleteComment(post_id: number, comment_id: number){
     return this.http.delete(`${this.postsURL}/${post_id}/comments/${comment_id}`)
   }
-  editReply(post_id: number, comment_id: number, reply_id: number, text: string){
-    return this.http.put(`${this.postsURL}/${post_id}/comments/${comment_id}/replies/${reply_id}`, {text})
+  editReply(post_id: number, comment_id: number, reply_id: number, content: string){
+    return this.http.put(`${this.postsURL}/${post_id}/comments/${comment_id}/replies/${reply_id}`, {content})
   }
   deleteReply(post_id: number, comment_id: number, reply_id: number){
     return this.http.delete(`${this.postsURL}/${post_id}/comments/${comment_id}/replies/${reply_id}`)

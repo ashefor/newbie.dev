@@ -31,7 +31,7 @@ export class EditReplyComponent implements OnInit {
   }
   submitEditedReply(formvalue){
     let reply: IReplies = {
-      text: formvalue.text
+      content: formvalue.text
     }
     this.editThisReply.emit(reply)
   }

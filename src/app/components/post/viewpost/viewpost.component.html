@@ -42,7 +42,7 @@
             </div>
           </div>
           <div class="body-text content">
-            <div class="content texttrunc is-size-5 has-text-justified" [innerHTML]="post.body" #postBody>
+            <div class="content texttrunc is-size-5 has-text-justified" [innerHTML]="post.content" #postBody>
             </div>
             <div class="field has-text-left-mobile has-text-right">
               <a class="button is-rounded like_btn" (click)="likePost(post._id)" [style.border-color]="hasLikedThis"

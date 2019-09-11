@@ -22,7 +22,7 @@ export class EditComponent implements OnInit {
     this.updateform = this.fb.group({
       _id: [],
       title: [''],
-      body: [''],
+      content: [''],
     })
     this.route.params.subscribe((params: Params)=>{
       console.log(params)

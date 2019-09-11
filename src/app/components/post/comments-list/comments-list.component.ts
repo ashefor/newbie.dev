@@ -38,9 +38,9 @@ export class CommentsListComponent implements OnInit {
     private render: Renderer) { }
 
   ngOnInit() {
-    this.ds.currentMessage.subscribe(res => this.commentbody = res)
+    // this.ds.currentMessage.subscribe(res => this.commentbody = res)
     this.newCommentId = null;
-    this.comments;
+    // this.comments;
     this.open = false;
   }
 
@@ -62,16 +62,20 @@ export class CommentsListComponent implements OnInit {
   showEditComment(comment_id) {
     this.ps.getSingleCommentForUpdate(this.postId, comment_id).subscribe((data: any) => {
       if (data) {
+        console.log(data)
         this.editCommentId = comment_id;
-        this.ds.sendMessage(data.body)
+        this.ds.sendMessage(data.content)
       }
     })
   }
 
   editComment(editedcomment: IComments) {
-    this.ps.updateThisComment(this.postId, this.editCommentId, editedcomment.body).subscribe((data: any) => {
-      if (data) {
-        this.ds.sendNewPost(data)
+    console.log(editedcomment)
+    console.log(this.postId,this.editCommentId, editedcomment.content)
+    this.ps.updateThisComment(this.postId, this.editCommentId, editedcomment.content).subscribe((newdata: any) => {
+      if (newdata) {
+        console.log(newdata)
+        this.ds.sendNewPost(newdata)
         this.cancelEditComment()
       }
     })
@@ -84,7 +88,7 @@ export class CommentsListComponent implements OnInit {
   }
 
   replyComment(reply: IReplies) {
-    this.ps.postReply(this.postId, this.newCommentId, reply.text).subscribe((data: any) => {
+    this.ps.postReply(this.postId, this.newCommentId, reply.content).subscribe((data: any) => {
       if (data) {
         console.log(data)
         this.ds.sendNewPost(data)

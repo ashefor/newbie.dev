@@ -27,7 +27,8 @@ export class HomeComponent implements OnInit, AfterViewInit {
         console.log(data)
         this.posts = data;
         for (let obj of data) {
-          this.readingTime(obj.body)
+          console.log(obj)
+          this.readingTime(obj.content)
           this.alltags.push(obj.meta.tags);
         }
       }
@@ -41,6 +42,7 @@ export class HomeComponent implements OnInit, AfterViewInit {
   viewBody(after) {
     this.postBodyy.forEach(body => {
       const limit = 50;
+      console.log(body.nativeElement)
       let content = body.nativeElement.innerHTML.trim()
       content = content.split(' ')
       if (content.length <= limit) {

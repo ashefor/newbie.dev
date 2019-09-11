@@ -8,6 +8,7 @@ import { posts, IComments } from 'src/app/model/post.model';
 import { ChangeEvent } from '@ckeditor/ckeditor5-angular/ckeditor.component';
 import { Location } from '@angular/common';
 import { DataService } from 'src/app/services/data.service';
+import { ToasterNotificationService } from 'src/app/services/toastr.service';
 
 
 
@@ -68,6 +69,7 @@ export class ViewpostComponent implements OnInit {
     private fb: FormBuilder, 
     private location: Location,
     private ds: DataService,
+    public toastr: ToasterNotificationService,
     public el: ElementRef<HTMLElement>) { }
     public innerWidth: any;
     hasLikedThis;
@@ -89,7 +91,7 @@ export class ViewpostComponent implements OnInit {
           this.allreplies = res.comments.replies
           this.nooflikes = res.meta.likes;
           this.alltags = res.meta.tags
-          this.readingTime(res.body)
+          this.readingTime(res.content)
           this.showTags(res.meta.tags)
         }
       })
@@ -172,6 +174,7 @@ export class ViewpostComponent implements OnInit {
       this.hs.deletePost(post._id).subscribe((data: any) => {
         if (data) {
           console.log(data)
+          this.toastr.successToastr(data.message)
           this.router.navigate(['/posts'])
         }
         (error: any) => {
@@ -182,9 +185,12 @@ export class ViewpostComponent implements OnInit {
   }
 
   saveNewComment(comment: IComments){
-    this.hs.createComment(this.post._id, comment.body).subscribe((data: any)=>{
+    console.log(comment.content)
+    this.hs.createComment(this.post._id, comment.content).subscribe((data: any)=>{
       if(data){
         let lastObject: IComments = data.comments.pop()
+        console.log(data)
+        console.log(lastObject)
         this.post.comments.push(lastObject)
         this.addComment = false;
       }

@@ -16,6 +16,7 @@ import { ReplyCommentComponent } from './reply/reply-comment/reply-comment.compo
 import { EditCommentComponent } from './edit-comment/edit-comment.component';
 import { TimeAgoPipe } from 'src/app/pipes/timeago.pipe';
 import { EditReplyComponent } from './reply/edit-reply/edit-reply.component';
+import { SampleComponent } from './sample/sample.component';
 
 @NgModule({
   declarations: [
@@ -30,6 +31,7 @@ import { EditReplyComponent } from './reply/edit-reply/edit-reply.component';
     ReplyCommentComponent,
     EditCommentComponent,
     EditReplyComponent,
+    SampleComponent,
   ],
   imports: [
     CommonModule,

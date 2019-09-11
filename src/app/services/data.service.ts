@@ -10,10 +10,12 @@ export class DataService {
   private msgFromServer = new BehaviorSubject('');
   private postBody = new BehaviorSubject(this.post);
   private commentReplyData = new BehaviorSubject('')
+  public responseIdBody = new BehaviorSubject('')
 
   currentMessage = this.msgFromServer.asObservable()
   newPostBody = this.postBody.asObservable()
   newCommentReplyData = this.commentReplyData.asObservable()
+  responseIds = this.responseIdBody.asObservable()
   constructor() { }
 
   sendMessage(data: any){
@@ -26,5 +28,9 @@ export class DataService {
 
   sendCommentReplyData(data: any){
     this.commentReplyData.next(data)
+  }
+
+  sendIds(id:any){
+    this.responseIdBody.next(id)
   }
 }

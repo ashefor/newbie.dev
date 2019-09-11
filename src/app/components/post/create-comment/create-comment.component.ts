@@ -27,7 +27,7 @@ export class CreateCommentComponent implements OnInit {
 
   addThisComment(formValue) {
     let comment: IComments = {
-      body: formValue.body,
+      content: formValue.body,
       likes: 0,
       date: new Date,
     }

@@ -9,8 +9,6 @@
         <div class="control">
           <input type="text" formControlName="title" class="input title is-size-4 is-medium" placeholder="Title of post"
             maxlength="100">
-          <!-- <textarea name="" id="author" class="textarea" formControlName="title" (input)="growAuthTitle($event)" placeholder="Title of post" ></textarea> -->
-          <!-- <textarea name="" id="" cols="30" rows="5" class="textarea"></textarea> -->
         </div>
         <div *ngIf="title.touched && title.invalid" class="has-text-danger">
           <div *ngIf="title.errors.required">Please add a title</div>
@@ -21,7 +19,7 @@
           Description
         </label>
         <div class="control">
-          <ckeditor [editor]="Editor" [config]="config" formControlName="body"></ckeditor>
+          <ckeditor [editor]="Editor" [config]="config" formControlName="content"></ckeditor>
         </div>
         <div *ngIf="body.touched && body.invalid" class="has-text-danger">
           <div *ngIf="body.errors.required">Please enter your post</div>
@@ -45,5 +43,19 @@
         </span>
       </button>
     </form>
+    <!-- <div class="">
+      <div #editable class='editable'>
+      </div>
+      <div class="field">
+        <label class="label">Tags</label>
+        <div class="control" *ngFor="let tag of alltags; let i = index">
+          <label class="checbox" (click)="addtag($event)">
+            <input type="checkbox" class="checkbox" value="{{tag}}" [attr.data-value]="tag">
+            {{alltags[i]}}
+          </label>
+        </div>
+      </div>
+      <button type="button" (click)="showBody()">Show</button>
+    </div> -->
   </div>
 </div>

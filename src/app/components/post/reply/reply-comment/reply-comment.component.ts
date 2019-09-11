@@ -26,7 +26,7 @@ export class ReplyCommentComponent implements OnInit {
   }
   sendReply(formValue) {
     let reply: IReplies = {
-      text: formValue.text,
+      content: formValue.text,
       date: new Date,
     }
     // console.log(formValue)

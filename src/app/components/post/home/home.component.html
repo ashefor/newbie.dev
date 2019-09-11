@@ -7,15 +7,13 @@
     <div class="columns">
       <div class="column is-narrow">
         <div class="box">
-          narrow guy
+          Some content
         </div>
       </div>
       
       
       <div class="column">
         <div class="card mt2" *ngFor="let post of posts; let i = index;">
-            <input type="text" value="{{post.body}}" name="" id="">
-            <ckeditor disabled="true" [editor]="Editor" [data]="post.body"></ckeditor>
           <div class="card-content">
             <div class="media">
               <div class="media-left">
@@ -52,9 +50,10 @@
 
               </div>
             </a> -->
-            <div class="show" #postBody [innerHTML]="post.body">
-              {{post.body}}
+            <div class="show" #postBody [innerHTML]="post.content">
+              {{post.content}}
             </div>
+            <!-- <ckeditor disabled="true" [editor]="Editor" [data]="post.content"></ckeditor> -->
             <footer class="c_f">
               <div class="level is-mobile">
                 <div class="level-left">
@@ -91,7 +90,7 @@
       </div>
       <div class="column is-narrow">
         <div class="box">
-          narrow guy
+          Some content
         </div>
       </div>
     </div>
