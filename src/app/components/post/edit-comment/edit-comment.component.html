@@ -1,11 +1,11 @@
 <div>
   <div class="field">
     <form [formGroup]="editCommentForm">
-      <ckeditor [editor]="Editor" formControlName="text">
+      <ckeditor [editor]="Editor" [config]="config" formControlName="text">
 
       </ckeditor>
       <div class="buttons">
-        <button class="button is-dark" (click)="cancelComment()">
+        <button class="button is-dark" (click)="cancelComment()" type="button">
           cancel
         </button>
         <button class="button is-dark" (click)="updateComment(editCommentForm.value)" [disabled]="editCommentForm.invalid">

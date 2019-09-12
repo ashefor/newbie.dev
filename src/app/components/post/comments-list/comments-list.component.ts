@@ -62,7 +62,6 @@ export class CommentsListComponent implements OnInit {
   showEditComment(comment_id) {
     this.ps.getSingleCommentForUpdate(this.postId, comment_id).subscribe((data: any) => {
       if (data) {
-        console.log(data)
         this.editCommentId = comment_id;
         this.ds.sendMessage(data.content)
       }
@@ -70,11 +69,8 @@ export class CommentsListComponent implements OnInit {
   }
 
   editComment(editedcomment: IComments) {
-    console.log(editedcomment)
-    console.log(this.postId,this.editCommentId, editedcomment.content)
     this.ps.updateThisComment(this.postId, this.editCommentId, editedcomment.content).subscribe((newdata: any) => {
       if (newdata) {
-        console.log(newdata)
         this.ds.sendNewPost(newdata)
         this.cancelEditComment()
       }
@@ -90,7 +86,6 @@ export class CommentsListComponent implements OnInit {
   replyComment(reply: IReplies) {
     this.ps.postReply(this.postId, this.newCommentId, reply.content).subscribe((data: any) => {
       if (data) {
-        console.log(data)
         this.ds.sendNewPost(data)
         this.cancelAddReply()
       }

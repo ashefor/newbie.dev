@@ -1,7 +1,8 @@
 import { Component, OnInit, Output, EventEmitter } from '@angular/core';
 import { FormGroup, FormBuilder } from '@angular/forms';
 import { DataService } from 'src/app/services/data.service';
-import * as BalloonEditor from '@ckeditor/ckeditor5-build-balloon';
+// import * as BalloonEditor from '@ckeditor/ckeditor5-build-balloon';
+import * as ClassicEditor from '@ckeditor/ckeditor5-build-classic';
 import { IReplies } from 'src/app/model/post.model';
 
 
@@ -12,7 +13,11 @@ import { IReplies } from 'src/app/model/post.model';
   styleUrls: ['./edit-reply.component.css']
 })
 export class EditReplyComponent implements OnInit {
-  public Editor = BalloonEditor;
+  public Editor = ClassicEditor;
+  public config = {
+    removePlugins: ['Heading'],
+    toolbar: ['bold', 'italic', 'link', 'imageUpload', "imageStyle:full", "imageStyle:side", 'bulletedList', 'numberedList', 'blockQuote']
+  }
   editReplyForm: FormGroup;
   replyCommentBody;
   @Output() cancelEditThisReply = new EventEmitter();

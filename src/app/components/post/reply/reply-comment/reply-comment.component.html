@@ -1,15 +1,15 @@
 <div>
   <div class="field">
     <form [formGroup]="replyCommentForm">
-      <ckeditor [editor]="Editor" formControlName="text">
+      <ckeditor [editor]="Editor" [config]='config' formControlName="text">
 
       </ckeditor>
       <div class="buttons">
-        <button class="button is-dark" (click)="cancelReply()">
+          <button class="button is-dark" (click)="sendReply(replyCommentForm.value)" type="submit" [disabled]="replyCommentForm.invalid">
+              Submit
+            </button>
+        <button class="button is-dark" (click)="cancelReply()" type="button">
           cancel
-        </button>
-        <button class="button is-dark" (click)="sendReply(replyCommentForm.value)" type="button" [disabled]="replyCommentForm.invalid">
-          Submit
         </button>
       </div>
     </form>

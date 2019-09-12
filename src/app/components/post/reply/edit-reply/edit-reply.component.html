@@ -1,7 +1,7 @@
 <div>
   <div class="field">
     <form [formGroup]="editReplyForm">
-     <ckeditor [editor]="Editor" [data]="replyBody" formControlName="text">
+     <ckeditor [editor]="Editor" [config]="config" [data]="replyBody" formControlName="text">
    
      </ckeditor>
      <div class="buttons">

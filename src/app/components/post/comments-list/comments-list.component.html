@@ -1,4 +1,4 @@
-<div *ngFor="let comment of comments.reverse(); let i = index">
+<div class="commentField" *ngFor="let comment of comments.reverse(); let i = index">
   <div class="card mt2">
     <div class="card-content">
       <div class="media">
@@ -44,12 +44,6 @@
             </div>
           </div>
       </div>
-
-      
-      
-
-
-
 
       <div class="content" [innerHTML]="comment.content">
 

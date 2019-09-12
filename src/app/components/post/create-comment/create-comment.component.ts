@@ -1,6 +1,7 @@
 import { Component, OnInit, Output, EventEmitter, Input } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
-import * as BalloonEditor from '@ckeditor/ckeditor5-build-balloon';
+// import * as BalloonEditor from '@ckeditor/ckeditor5-build-balloon';
+import * as ClassicEditor from '@ckeditor/ckeditor5-build-classic';
 import { PostService } from 'src/app/services/home.service';
 import { IComments } from 'src/app/model/post.model';
 
@@ -11,16 +12,20 @@ import { IComments } from 'src/app/model/post.model';
 })
 export class CreateCommentComponent implements OnInit {
 
-  public Editor = BalloonEditor;
+  public Editor = ClassicEditor;
+  public config = {
+    removePlugins: ['Heading'],
+    toolbar: ['bold', 'italic', 'link', 'imageUpload', "imageStyle:full", "imageStyle:side", 'bulletedList', 'numberedList', 'blockQuote']
+  }
   commentForm: FormGroup;
-  @Output() saveNewComment = new EventEmitter() 
-  @Input() postId;
+  @Output() saveNewComment = new EventEmitter()
+  @Input() reset;
 
   constructor(private fb: FormBuilder, private ps: PostService) { }
 
   ngOnInit() {
     this.commentForm = this.fb.group({
-      body: ['', Validators.required]
+      body: [this.reset, Validators.required]
     })
   }
 
@@ -32,5 +37,6 @@ export class CreateCommentComponent implements OnInit {
       date: new Date,
     }
     this.saveNewComment.emit(comment)
+    this.commentForm.reset()
   }
 }

@@ -1,10 +1,10 @@
-<div style="border: 2px solid" class="field c_w">
+<div class="field">
   <form [formGroup]="commentForm">
-    <div class="control t_w">
-      <ckeditor [editor]="Editor" formControlName="body"></ckeditor>
+    <div class="control">
+      <ckeditor [editor]="Editor" [config]="config" formControlName="body"></ckeditor>
     </div>
     <div class="buttons is-right b_w">
-      <button class="button is-info" (click)="addThisComment(commentForm.value)" [disabled]="commentForm.invalid">Submit</button>
+      <button class="button is-info" (click)="addThisComment(commentForm.value)" type="submit" [disabled]="commentForm.invalid">Submit</button>
     </div>
   </form>
 </div>

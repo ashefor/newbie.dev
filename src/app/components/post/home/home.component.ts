@@ -1,7 +1,7 @@
 import { posts } from '../../../model/post.model';
 import { PostService } from '../../../services/home.service';
 import { Component, OnInit, ViewChildren, ElementRef, QueryList, ViewChild, AfterViewInit } from '@angular/core';
-import * as BalloonEditor from '@ckeditor/ckeditor5-build-balloon';
+// import * as BalloonEditor from '@ckeditor/ckeditor5-build-balloon';
 
 @Component({
   selector: 'app-home',
@@ -9,11 +9,10 @@ import * as BalloonEditor from '@ckeditor/ckeditor5-build-balloon';
   styleUrls: ['./home.component.css']
 })
 export class HomeComponent implements OnInit, AfterViewInit {
-  public Editor = BalloonEditor
+  // public Editor = BalloonEditor
   allposts = [];
   posts: posts[]
   nodata;
-  // wordsPerMinute =  200;
   result = [];
   showTags = false;
   alltags = [];
@@ -27,7 +26,6 @@ export class HomeComponent implements OnInit, AfterViewInit {
         console.log(data)
         this.posts = data;
         for (let obj of data) {
-          console.log(obj)
           this.readingTime(obj.content)
           this.alltags.push(obj.meta.tags);
         }
@@ -42,7 +40,6 @@ export class HomeComponent implements OnInit, AfterViewInit {
   viewBody(after) {
     this.postBodyy.forEach(body => {
       const limit = 50;
-      console.log(body.nativeElement)
       let content = body.nativeElement.innerHTML.trim()
       content = content.split(' ')
       if (content.length <= limit) {
@@ -55,7 +52,6 @@ export class HomeComponent implements OnInit, AfterViewInit {
       body.nativeElement.innerHTML = content;
       this.newpostbod.push(body.nativeElement.innerHTML)
     })
-    console.log(this.newpostbod)
   }
   readingTime(body) {
     const wordsPerMinute = 200;
@@ -71,7 +67,5 @@ export class HomeComponent implements OnInit, AfterViewInit {
     content = content.join(' ') + (after ? after : '');
 
     body.textContent = content
-
-    console.log(body)
   }
 }

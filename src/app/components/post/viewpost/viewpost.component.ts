@@ -3,7 +3,7 @@ import { PostService } from '../../../services/home.service';
 import { Component, OnInit, ViewChild, ElementRef, HostListener, AfterViewInit, Output, EventEmitter } from '@angular/core';
 import { ActivatedRoute, Params, Router } from '@angular/router';
 
-import * as BalloonEditor from '@ckeditor/ckeditor5-build-balloon';
+// import * as BalloonEditor from '@ckeditor/ckeditor5-build-balloon';
 import { posts, IComments } from 'src/app/model/post.model';
 import { ChangeEvent } from '@ckeditor/ckeditor5-angular/ckeditor.component';
 import { Location } from '@angular/common';
@@ -21,6 +21,7 @@ import { ToasterNotificationService } from 'src/app/services/toastr.service';
 })
 export class ViewpostComponent implements OnInit {
   post: posts;
+  reset = '';
   showpost;
   addComment;
   previewedcomment;
@@ -29,7 +30,7 @@ export class ViewpostComponent implements OnInit {
   editedcomemnt;
   replyToComment: string;
   editReply: string
-  public Editor = BalloonEditor;
+  // public Editor = BalloonEditor;
   public onChange({ editor }: ChangeEvent) {
     // const data = editor.getData();
     this.editedcomemnt = editor.getData()
@@ -173,7 +174,6 @@ export class ViewpostComponent implements OnInit {
     if (confirm(`Really delete ${post.title}?`)) {
       this.hs.deletePost(post._id).subscribe((data: any) => {
         if (data) {
-          console.log(data)
           this.toastr.successToastr(data.message)
           this.router.navigate(['/posts'])
         }
@@ -185,12 +185,9 @@ export class ViewpostComponent implements OnInit {
   }
 
   saveNewComment(comment: IComments){
-    console.log(comment.content)
     this.hs.createComment(this.post._id, comment.content).subscribe((data: any)=>{
       if(data){
         let lastObject: IComments = data.comments.pop()
-        console.log(data)
-        console.log(lastObject)
         this.post.comments.push(lastObject)
         this.addComment = false;
       }

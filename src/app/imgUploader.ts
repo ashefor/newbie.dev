@@ -38,10 +38,12 @@ export class MyUploadAdapter{
                 default: response.url
             } );
             console.log(response)
+            this.shouter()
         } );
         if ( xhr.upload ) {
             xhr.upload.addEventListener( 'progress', evt => {
                 if ( evt.lengthComputable ) {
+                    console.log()
                     loader.uploadTotal = evt.total;
                     loader.uploaded = evt.loaded;
                 }
@@ -53,5 +55,16 @@ export class MyUploadAdapter{
         const data = new FormData();
         data.append( 'image', file );
         this.xhr.send( data );
+    }
+
+    shouter(){
+        alert('uploaded successfully')
+    }
+}
+
+declare var toastr: any
+export class mediaIds{
+    constructor(){
+        toastr.successToastr('upolo')
     }
 }
